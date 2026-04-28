@@ -3,218 +3,186 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Beard Walks In — I Go So You Know</title>
-<meta name="description" content="Beard walks into small town restaurants, bars, breweries, and hidden gems so you don't waste your money. Real reviews. No sponsors. No BS. Just Beard." />
-<meta name="keywords" content="local restaurants, small town food, beard laws, local discovery, North Country NY, hidden gems, local bars, breweries, honest reviews" />
-<link rel="canonical" href="https://beardwalksin.com" />
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="Beard Walks In" />
-<meta property="og:title" content="Beard Walks In — I Go So You Know" />
-<meta property="og:description" content="Real reviews of small town spots. No sponsors. No paid placements. Just Beard walking in and telling you exactly what he thinks." />
-<meta property="og:url" content="https://beardwalksin.com" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:site" content="@beardlaws" />
-<meta name="twitter:title" content="Beard Walks In — I Go So You Know" />
-<meta name="twitter:description" content="Real reviews of small town spots. No sponsors. No paid placements. Just Beard." />
-
+<title>Beard Walks In</title>
+<meta name="description" content="Local discovery powered by Beard Laws. Restaurants, bars, breweries, barbershops, and hidden gems — reviewed on video." />
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
 <style>
-/* ── PIRATES COLOR SYSTEM ──────────────────────────── */
+/* Pittsburgh Pirates: Black #27251F | Gold #FDB827 | White #FFFFFF */
 :root {
-  --gold:      #FDB827;
-  --gold-dk:   #D99A10;
-  --gold-dim:  rgba(253,184,39,0.12);
-  --gold-glow: rgba(253,184,39,0.25);
-  --blk:       #27251F;
-  --blk-deep:  #0E0D0A;
-  --blk-card:  #1A1810;
-  --blk-surf:  #242118;
-  --blk-line:  #332F22;
-  --blk-mid:   #4A4535;
-  --blk-muted: #6B6455;
-  --blk-soft:  #8C8472;
-  --blk-light: #B8AE98;
-  --blk-pale:  #D8CEBC;
-  --white:     #FFFFFF;
-  --red:       #C0392B;
-  --green:     #27AE60;
+  --gold:       #FDB827;
+  --gold-dk:    #D99A10;
+  --gold-glow:  rgba(253,184,39,0.22);
+  --gold-dim:   rgba(253,184,39,0.10);
+  --blk:        #27251F;
+  --blk-deep:   #131210;
+  --blk-card:   #1E1C17;
+  --blk-surf:   #2A2820;
+  --blk-line:   #38352A;
+  --blk-mid:    #4A4640;
+  --blk-muted:  #6B6560;
+  --blk-soft:   #8C867E;
+  --blk-light:  #B8B0A8;
+  --blk-pale:   #D8D0C8;
+  --white:      #FFFFFF;
 }
-
-/* ── RESET ─────────────────────────────────────────── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;color-scheme:dark}
-body{background:var(--blk-deep);color:var(--blk-pale);font-family:'DM Sans',sans-serif;min-height:100dvh;overflow-x:hidden}
+body{background:var(--blk-deep);color:var(--blk-pale);font-family:'DM Sans',sans-serif;min-height:100dvh}
 h1,h2,h3,h4,h5,h6{font-family:'Bebas Neue',Impact,sans-serif;letter-spacing:.04em;color:var(--white);line-height:1}
-a{color:inherit;transition:all .2s}
-img{display:block}
+a{color:inherit;transition:color .15s}
 ::selection{background:var(--gold);color:var(--blk)}
-::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:var(--blk-deep)}
-::-webkit-scrollbar-thumb{background:var(--blk-mid);border-radius:4px}
+::-webkit-scrollbar-thumb{background:var(--blk-mid);border-radius:9px}
 ::-webkit-scrollbar-thumb:hover{background:var(--gold)}
-:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:4px}
 
-/* ── LAYOUT ────────────────────────────────────────── */
-.container{max-width:1200px;margin:0 auto;padding:0 24px}
-.section{padding:80px 0}
-@media(max-width:768px){.container{padding:0 16px}.section{padding:56px 0}}
+/* Layout */
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+.section{padding:72px 0}
+@media(max-width:768px){.container{padding:0 16px}.section{padding:48px 0}}
 
-/* ── GOLD ──────────────────────────────────────────── */
-.gold-bar{background:linear-gradient(90deg,var(--gold),var(--gold-dk))}
+/* Gold accents */
+.gold-bar{background:linear-gradient(90deg,var(--gold) 0%,var(--gold-dk) 100%)}
 .gold-bar-v{background:linear-gradient(180deg,var(--gold),var(--gold-dk))}
-.gold-text{background:linear-gradient(135deg,var(--gold) 0%,var(--gold-dk) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.gold-text{background:linear-gradient(135deg,var(--gold),var(--gold-dk));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-glow{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 18% 50%,rgba(253,184,39,.09) 0%,transparent 70%);pointer-events:none}
 
-/* ── BUTTONS ────────────────────────────────────────── */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border-radius:8px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;transition:all .2s;border:none;white-space:nowrap;letter-spacing:.01em}
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border-radius:8px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;transition:all .15s;border:none;white-space:nowrap;line-height:1}
 .btn:active{transform:scale(.97)}
-.btn-primary{background:var(--gold);color:var(--blk);padding:12px 26px;box-shadow:0 4px 20px rgba(253,184,39,.2)}
-.btn-primary:hover{background:var(--gold-dk);box-shadow:0 4px 30px rgba(253,184,39,.4);transform:translateY(-1px)}
-.btn-secondary{background:transparent;color:var(--white);padding:12px 26px;border:1.5px solid var(--blk-line)}
-.btn-secondary:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px)}
+.btn-primary{background:var(--gold);color:var(--blk);padding:10px 22px}
+.btn-primary:hover{background:var(--gold-dk);box-shadow:0 0 22px var(--gold-glow)}
+.btn-secondary{background:transparent;color:var(--white);padding:10px 22px;border:1.5px solid var(--blk-line)}
+.btn-secondary:hover{border-color:var(--gold);color:var(--gold)}
 .btn-ghost{background:transparent;color:var(--blk-soft);padding:8px 14px;font-weight:500}
-.btn-ghost:hover{background:var(--blk-surf);color:var(--white)}
-.btn-sm{padding:7px 16px;font-size:13px}
-.btn-lg{padding:15px 34px;font-size:16px}
+.btn-ghost:hover{background:var(--blk-card);color:var(--white)}
+.btn-sm{padding:6px 14px;font-size:13px}
+.btn-lg{padding:14px 32px;font-size:16px}
 .btn-full{width:100%}
 
-/* ── CARDS ──────────────────────────────────────────── */
-.card{background:var(--blk-card);border:1px solid var(--blk-line);border-radius:16px;overflow:hidden;transition:all .25s;cursor:pointer}
-.card:hover{border-color:var(--gold-dk);box-shadow:0 12px 48px rgba(0,0,0,.7),0 0 0 1px rgba(253,184,39,.1);transform:translateY(-4px)}
+/* Cards */
+.card{background:var(--blk-card);border:1px solid var(--blk-line);border-radius:16px;overflow:hidden;transition:all .2s}
+.card:hover{border-color:var(--blk-mid);box-shadow:0 8px 40px rgba(0,0,0,.6);transform:translateY(-2px)}
 .card-flat{background:var(--blk-card);border:1px solid var(--blk-line);border-radius:16px;overflow:hidden}
-.card-surf{background:var(--blk-surf);border:1px solid var(--blk-line);border-radius:12px}
 
-/* ── INPUTS ─────────────────────────────────────────── */
-.input{width:100%;padding:11px 15px;border-radius:8px;border:1px solid var(--blk-line);background:var(--blk-surf);color:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;transition:all .2s}
+/* Inputs */
+.input{width:100%;padding:10px 14px;border-radius:8px;border:1px solid var(--blk-line);background:var(--blk-card);color:var(--white);font-size:14px;font-family:'DM Sans',sans-serif;transition:border-color .15s}
 .input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
 .input::placeholder{color:var(--blk-muted)}
-select.input{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%236B6455' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
+select.input{appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%236B6560' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:36px}
 textarea.input{min-height:110px;resize:vertical}
-.label{display:block;font-size:11px;font-weight:700;color:var(--blk-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.08em}
+.label{display:block;font-size:12px;font-weight:700;color:var(--blk-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.06em}
 
-/* ── BADGES ─────────────────────────────────────────── */
+/* Badges */
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 .badge-gold{background:var(--gold);color:var(--blk)}
 .badge-dark{background:var(--blk-surf);color:var(--blk-soft);border:1px solid var(--blk-line)}
-.badge-green{background:rgba(39,174,96,.2);color:#2ECC71;border:1px solid rgba(39,174,96,.3)}
-.badge-fire{background:rgba(255,87,34,.15);color:#FF7043;border:1px solid rgba(255,87,34,.3)}
 
-/* ── BEARD SCORE ─────────────────────────────────────── */
-.beard-score-num{font-family:'Bebas Neue',sans-serif;color:var(--gold);line-height:1}
-.score-bar-track{height:5px;background:var(--blk-surf);border-radius:3px;overflow:hidden;flex:1}
-.score-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold-dk),var(--gold));transition:width .8s ease}
+/* Stars & ratings */
+.stars{color:var(--gold);letter-spacing:-1px}
+.rbar-track{height:6px;background:var(--blk-surf);border-radius:3px;overflow:hidden}
+.rbar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold-dk),var(--gold));transition:width .6s ease}
 
-/* ── BEARD WAS HERE STAMP ───────────────────────────── */
-.bwh-stamp{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border:2.5px solid var(--gold);border-radius:3px;color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:.12em;transform:rotate(-1.5deg);box-shadow:0 0 12px rgba(253,184,39,.2),inset 0 0 12px rgba(253,184,39,.05);text-shadow:0 0 10px rgba(253,184,39,.4)}
+/* Beard stamp */
+.beard-stamp{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border:2px solid var(--gold);border-radius:4px;color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:.1em;transform:rotate(-2deg)}
 
-/* ── STOP CARD ──────────────────────────────────────── */
-.stop-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--blk-surf);display:block;transition:transform .4s ease}
-.card:hover .stop-thumb{transform:scale(1.04)}
-.stop-thumb-wrap{overflow:hidden;position:relative}
-.stop-card-body{padding:20px}
-.stop-tag{display:inline-flex;align-items:center;padding:3px 9px;border-radius:6px;font-size:11px;font-weight:700;letter-spacing:.04em;background:var(--blk-surf);color:var(--blk-soft);border:1px solid var(--blk-line);margin-right:4px;margin-bottom:4px}
-.stop-tag.fire{background:rgba(255,87,34,.12);color:#FF7043;border-color:rgba(255,87,34,.25)}
-.stop-tag.gem{background:rgba(156,39,176,.12);color:#CE93D8;border-color:rgba(156,39,176,.25)}
-.stop-tag.family{background:rgba(33,150,243,.12);color:#64B5F6;border-color:rgba(33,150,243,.25)}
-.stop-tag.value{background:rgba(39,174,96,.12);color:#66BB6A;border-color:rgba(39,174,96,.25)}
+/* WGB */
+.wgb-hell{background:#14532D;color:#86EFAC;border-radius:8px;padding:9px 16px;font-weight:700;font-size:14px;display:inline-block}
+.wgb-yes{background:#1e3a5f;color:#93C5FD;border-radius:8px;padding:9px 16px;font-weight:700;font-size:14px;display:inline-block}
+.wgb-nah{background:var(--blk-surf);color:var(--blk-soft);border-radius:8px;padding:9px 16px;font-weight:700;font-size:14px;display:inline-block}
 
-/* ── MINI SCORE DISPLAY ─────────────────────────────── */
-.mini-score{display:inline-flex;align-items:center;gap:5px;background:rgba(253,184,39,.1);border:1px solid rgba(253,184,39,.2);border-radius:8px;padding:4px 10px}
-.mini-score-num{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);line-height:1}
-.mini-score-label{font-size:10px;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+/* Nav */
+#navbar{position:fixed;top:0;left:0;right:0;z-index:40}
+.nav-inner{background:rgba(19,18,16,.96);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--blk-line)}
+.nav-link{padding:8px 13px;border-radius:8px;font-size:14px;font-weight:500;color:var(--blk-soft);cursor:pointer;transition:all .15s;text-decoration:none;display:inline-block}
+.nav-link:hover{color:var(--white);background:var(--blk-card)}
+.nav-link.active{color:var(--gold)}
 
-/* ── NAV ────────────────────────────────────────────── */
-#navbar{position:fixed;top:0;left:0;right:0;z-index:100;transition:all .3s}
-.nav-inner{background:rgba(14,13,10,.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--blk-line)}
-.nav-link{padding:8px 13px;border-radius:8px;font-size:14px;font-weight:500;color:var(--blk-soft);cursor:pointer;transition:all .2s;text-decoration:none;display:inline-block}
-.nav-link:hover{color:var(--white);background:var(--blk-surf)}
-
-/* ── MOBILE MENU ────────────────────────────────────── */
-#mobile-menu{display:none;position:fixed;inset:0;z-index:200;background:var(--blk-deep);flex-direction:column;align-items:center;justify-content:center;gap:4px}
+/* Mobile menu */
+#mobile-menu{display:none;position:fixed;inset:0;z-index:50;background:var(--blk-deep);flex-direction:column;align-items:center;justify-content:center;gap:4px}
 #mobile-menu.open{display:flex}
-.mob-link{font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--white);cursor:pointer;padding:4px 20px;transition:color .15s}
+.mob-link{font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--white);letter-spacing:.04em;cursor:pointer;padding:4px 20px;border-radius:10px;transition:color .15s;text-decoration:none}
 .mob-link:hover{color:var(--gold)}
 
-/* ── PAGES ──────────────────────────────────────────── */
+/* Pages */
 .page{display:none}.page.active{display:block}
 
-/* ── HERO ───────────────────────────────────────────── */
-.hero{position:relative;overflow:hidden;background:var(--blk-deep);min-height:94vh;display:flex;align-items:center}
-.hero-grid{display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:center}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr}.hero-sticker{display:none!important}}
-
-/* ── GRIDS ──────────────────────────────────────────── */
-.stop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:28px}
-@media(max-width:680px){.stop-grid{grid-template-columns:1fr}}
-.detail-grid{display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:start}
-@media(max-width:960px){.detail-grid{grid-template-columns:1fr}}
-
-/* ── MAP ────────────────────────────────────────────── */
+/* Map */
 #map{width:100%;height:100%}
 .leaflet-container{background:var(--blk-card)}
-.leaflet-popup-content-wrapper{background:var(--blk-card);border:1px solid var(--blk-line);border-radius:14px;color:var(--blk-pale);box-shadow:0 12px 40px rgba(0,0,0,.8)}
+.leaflet-popup-content-wrapper{background:var(--blk-card);border:1px solid var(--blk-line);border-radius:14px;color:var(--blk-pale);box-shadow:0 8px 32px rgba(0,0,0,.7)}
 .leaflet-popup-tip{background:var(--blk-card)}
 .leaflet-popup-content{margin:14px 16px;font-family:'DM Sans',sans-serif}
 .leaflet-popup-close-button{color:var(--blk-muted)!important;font-size:18px!important;top:10px!important;right:10px!important}
 .leaflet-control-zoom a{background:var(--blk-card)!important;color:var(--white)!important;border-color:var(--blk-line)!important}
-.leaflet-tile{filter:brightness(.78) saturate(.6)}
-.map-layout{display:flex;height:calc(100vh - 63px)}
-.map-sidebar{width:310px;min-width:280px;background:var(--blk-card);border-right:1px solid var(--blk-line);display:flex;flex-direction:column;overflow:hidden}
-@media(max-width:768px){.map-sidebar{display:none}}
+.leaflet-control-zoom a:hover{background:var(--blk-surf)!important}
+.leaflet-tile{filter:brightness(.80) saturate(.65)}
 
-/* ── ADMIN ──────────────────────────────────────────── */
+/* Admin */
 .admin-section{display:none}.admin-section.active{display:block}
 .atab{padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:var(--blk-muted);background:transparent;border:none;transition:all .15s;font-family:'DM Sans',sans-serif}
+.atab:hover{color:var(--white)}
 .atab.active{background:var(--blk-surf);color:var(--gold)}
 .data-table{width:100%;border-collapse:collapse;font-size:13px}
 .data-table th{padding:10px 14px;text-align:left;color:var(--blk-muted);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--blk-line)}
 .data-table td{padding:12px 14px;border-bottom:1px solid var(--blk-surf);vertical-align:middle}
+.data-table tr:last-child td{border-bottom:none}
 .data-table tr:hover td{background:var(--blk-surf)}
 
-/* ── VIDEO ──────────────────────────────────────────── */
-.video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:var(--blk);border-radius:14px;overflow:hidden}
-.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
-
-/* ── GALLERY ────────────────────────────────────────── */
-.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
-.gal-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;cursor:pointer;transition:all .2s}
-.gal-img:hover{opacity:.8;transform:scale(1.02)}
-
-/* ── TOAST ──────────────────────────────────────────── */
+/* Toast */
 #toast{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
 .toast-item{padding:12px 18px;border-radius:10px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;animation:toastIn .3s ease;pointer-events:auto}
 .toast-ok{background:#14532D;color:#86EFAC;border:1px solid #166534}
 .toast-err{background:#7F1D1D;color:#FCA5A5;border:1px solid #991B1B}
 @keyframes toastIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── LIGHTBOX ───────────────────────────────────────── */
-#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out}
+/* Lightbox */
+#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.94);z-index:9999;align-items:center;justify-content:center;cursor:zoom-out}
 #lightbox.open{display:flex}
 #lightbox img{max-width:92vw;max-height:92vh;border-radius:10px}
 
-/* ── MISC ───────────────────────────────────────────── */
-.skel{background:var(--blk-surf);border-radius:12px;animation:pulse 1.6s ease infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-.divider{border-top:1px solid var(--blk-line)}
-.scroll-x{overflow-x:auto;scrollbar-width:none}.scroll-x::-webkit-scrollbar{display:none}
-.pill{padding:7px 18px;border-radius:99px;border:1.5px solid var(--blk-line);font-size:13px;font-weight:600;color:var(--blk-soft);cursor:pointer;transition:all .2s;white-space:nowrap;background:transparent;font-family:'DM Sans',sans-serif}
+/* Skeleton */
+.skel{background:var(--blk-surf);border-radius:12px;animation:shimmer 1.6s infinite}
+@keyframes shimmer{0%{opacity:1}50%{opacity:.5}100%{opacity:1}}
+
+/* Category pills */
+.pill{padding:7px 18px;border-radius:99px;border:1.5px solid var(--blk-line);font-size:13px;font-weight:600;color:var(--blk-soft);cursor:pointer;transition:all .15s;white-space:nowrap;background:transparent;font-family:'DM Sans',sans-serif}
 .pill:hover{border-color:var(--gold);color:var(--gold)}
 .pill.active{background:var(--gold);border-color:var(--gold);color:var(--blk)}
-.wgb-hell{background:rgba(39,174,96,.15);color:#2ECC71;border-radius:8px;padding:9px 16px;font-weight:700;font-size:14px;display:inline-block;border:1px solid rgba(39,174,96,.3)}
-.wgb-yes{background:rgba(52,152,219,.15);color:#3498DB;border-radius:8px;padding:9px 16px;font-weight:700;font-size:14px;display:inline-block;border:1px solid rgba(52,152,219,.3)}
-.wgb-nah{background:var(--blk-surf);color:var(--blk-soft);border-radius:8px;padding:9px 16px;font-weight:700;font-size:14px;display:inline-block;border:1px solid var(--blk-line)}
-.lb-rank{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--blk-mid);min-width:48px;line-height:1}
-.lb-rank.top{color:var(--gold)}
-@keyframes float{0%,100%{transform:translateY(0) rotate(2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
 
-/* ── SECTION DIVIDER ────────────────────────────────── */
-.section-eyebrow{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.section-eyebrow::before{content:'';width:32px;height:2px;background:var(--gold);border-radius:2px;flex-shrink:0}
-.section-eyebrow span{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.14em}
+/* Grids */
+.stop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px}
+@media(max-width:640px){.stop-grid{grid-template-columns:1fr}}
+.stop-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;background:var(--blk-surf);display:block}
+.detail-grid{display:grid;grid-template-columns:1fr 340px;gap:40px;align-items:start}
+@media(max-width:900px){.detail-grid{grid-template-columns:1fr}}
+
+/* Map layout */
+.map-layout{display:flex;height:calc(100vh - 63px)}
+.map-sidebar{width:300px;min-width:280px;background:var(--blk-card);border-right:1px solid var(--blk-line);display:flex;flex-direction:column;overflow:hidden}
+@media(max-width:768px){.map-sidebar{display:none}}
+
+/* Video */
+.video-wrap{position:relative;width:100%;aspect-ratio:16/9;background:var(--blk);border-radius:14px;overflow:hidden}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:none}
+
+/* Gallery */
+.gal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px}
+.gal-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;cursor:pointer;transition:opacity .15s;display:block}
+.gal-img:hover{opacity:.8}
+
+/* Leaderboard rank */
+.lb-rank{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--blk-mid);min-width:44px;line-height:1}
+.lb-rank.top{color:var(--gold)}
+
+.divider{border-top:1px solid var(--blk-line)}
+.scroll-x{overflow-x:auto;scrollbar-width:none}.scroll-x::-webkit-scrollbar{display:none}
+.hero{position:relative;overflow:hidden;background:var(--blk-deep);min-height:88vh;display:flex;align-items:center}
 </style>
 </head>
 <body>
@@ -225,18 +193,15 @@ textarea.input{min-height:110px;resize:vertical}
   <div class="nav-inner">
     <div class="container" style="display:flex;align-items:center;justify-content:space-between;height:60px">
       <a onclick="go('home')" style="display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none">
-        <img src="https://raw.githubusercontent.com/beardlaws/beardwalksin/main/beard-was-here-sticker.png" alt="Beard Walks In" style="height:44px;width:44px;object-fit:contain;border-radius:50%" onerror="this.style.display='none'" />
-        <div>
-          <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--white);letter-spacing:.04em;line-height:1">Beard Walks In</div>
-          <div style="font-size:9px;color:var(--gold);letter-spacing:.14em;text-transform:uppercase;line-height:1;margin-top:2px">Small Towns. Big Discoveries.</div>
-        </div>
+        <span class="gold-bar-v" style="width:3px;height:30px;border-radius:2px;display:block;flex-shrink:0"></span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--white);letter-spacing:.04em;line-height:1">Beard Walks In</span>
       </a>
       <nav id="desk-nav" style="display:flex;align-items:center;gap:2px">
         <a class="nav-link" onclick="go('stops')">Stops</a>
         <a class="nav-link" onclick="go('map')">Map</a>
         <a class="nav-link" onclick="go('leaderboard')">Leaderboard</a>
         <a class="nav-link" onclick="go('about')">About</a>
-        <button class="btn btn-primary btn-sm" style="margin-left:12px" onclick="go('suggest')">Suggest a Stop</button>
+        <button class="btn btn-primary btn-sm" style="margin-left:10px" onclick="go('suggest')">Suggest a Stop</button>
       </nav>
       <button id="hamburger" onclick="toggleMenu()" style="display:none;flex-direction:column;gap:5px;background:transparent;border:none;cursor:pointer;padding:8px" aria-label="Menu">
         <span id="hb1" style="width:24px;height:2px;background:var(--white);border-radius:2px;display:block;transition:all .3s"></span>
@@ -250,13 +215,18 @@ textarea.input{min-height:110px;resize:vertical}
 <!-- MOBILE MENU -->
 <div id="mobile-menu">
   <div class="gold-bar" style="position:absolute;top:0;left:0;right:0;height:3px"></div>
-  <button onclick="toggleMenu()" style="position:absolute;top:18px;right:18px;background:transparent;border:none;color:var(--white);font-size:28px;cursor:pointer;line-height:1">✕</button>
+  <button onclick="toggleMenu()" style="position:absolute;top:18px;right:18px;background:transparent;border:none;color:var(--white);font-size:30px;cursor:pointer;line-height:1">✕</button>
   <a class="mob-link" onclick="go('stops');toggleMenu()">Stops</a>
   <a class="mob-link" onclick="go('map');toggleMenu()">Map</a>
   <a class="mob-link" onclick="go('leaderboard');toggleMenu()">Leaderboard</a>
   <a class="mob-link" onclick="go('suggest');toggleMenu()">Suggest</a>
   <a class="mob-link" onclick="go('about');toggleMenu()">About</a>
   <div style="margin-top:20px"><button class="btn btn-primary btn-lg" onclick="go('suggest');toggleMenu()">Suggest a Stop →</button></div>
+  <div style="margin-top:28px;display:flex;gap:24px">
+    <a href="https://youtube.com/@BeardLawsNetwork" target="_blank" style="color:var(--blk-muted);font-size:13px;text-decoration:none">YouTube</a>
+    <a href="https://instagram.com/beardlaws" target="_blank" style="color:var(--blk-muted);font-size:13px;text-decoration:none">Instagram</a>
+    <a href="https://tiktok.com/@beardlaws" target="_blank" style="color:var(--blk-muted);font-size:13px;text-decoration:none">TikTok</a>
+  </div>
 </div>
 
 <div id="toast"></div>
@@ -264,81 +234,28 @@ textarea.input{min-height:110px;resize:vertical}
 
 <div style="padding-top:63px">
 
-<!-- ═══════════════ HOME ═══════════════ -->
+<!-- HOME -->
 <div id="page-home" class="page active">
-
-  <!-- HERO -->
   <section class="hero">
-    <!-- Texture -->
-    <div style="position:absolute;inset:0;opacity:.04;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%224%22 stitchTiles=%22stitch%22/></filter><rect width=%22300%22 height=%22300%22 filter=%22url(%23n)%22/></svg>');background-size:300px;pointer-events:none;z-index:1"></div>
-    <!-- Glow -->
-    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 12% 55%,rgba(253,184,39,.11) 0%,transparent 65%);pointer-events:none;z-index:1"></div>
-    <!-- Right accent -->
-    <div style="position:absolute;right:0;top:0;bottom:0;width:1px;background:linear-gradient(180deg,transparent,rgba(253,184,39,.3),transparent);z-index:1"></div>
-
-    <div class="container" style="position:relative;z-index:2;padding-top:60px;padding-bottom:80px">
-      <div class="hero-grid">
-        <!-- LEFT -->
-        <div>
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:28px">
-            <div style="width:36px;height:2px;background:var(--gold);border-radius:2px"></div>
-            <span style="font-size:11px;font-weight:700;color:var(--gold);letter-spacing:.16em;text-transform:uppercase">Beard Laws Network · Local Discovery</span>
-          </div>
-
-          <h1 style="font-size:clamp(68px,11vw,136px);line-height:.85;margin-bottom:20px">
-            I GO<br>SO YOU<br><span class="gold-text">KNOW.</span>
-          </h1>
-
-          <p style="font-size:18px;color:var(--blk-light);line-height:1.7;max-width:500px;margin-bottom:16px;font-weight:300">
-            Small town restaurants, bars, breweries, and hidden gems — walked into, ordered from, and reviewed on video.
-          </p>
-          <p style="font-size:15px;color:var(--blk-muted);margin-bottom:40px;font-style:italic">
-            No PR packages. No paid placements. No sponsorships. Just Beard.
-          </p>
-
-          <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:56px">
-            <button class="btn btn-primary btn-lg" onclick="go('stops')">Browse All Stops →</button>
-            <button class="btn btn-secondary btn-lg" onclick="go('map')">🗺️ See the Map</button>
-          </div>
-
-          <!-- Stats -->
-          <div style="display:flex;gap:0;border:1px solid var(--blk-line);border-radius:14px;overflow:hidden;width:fit-content;background:var(--blk-card)">
-            <div style="padding:18px 28px;border-right:1px solid var(--blk-line)">
-              <div class="beard-score-num" style="font-size:40px" id="hero-stops">—</div>
-              <div style="font-size:11px;color:var(--blk-muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:3px">Stops</div>
-            </div>
-            <div style="padding:18px 28px;border-right:1px solid var(--blk-line)">
-              <div class="beard-score-num" style="font-size:40px" id="hero-towns">—</div>
-              <div style="font-size:11px;color:var(--blk-muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:3px">Towns</div>
-            </div>
-            <div style="padding:18px 28px">
-              <div class="beard-score-num" style="font-size:40px" id="hero-bwh">—</div>
-              <div style="font-size:11px;color:var(--blk-muted);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-top:3px">Beard Was Here</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- RIGHT: Sticker -->
-        <div class="hero-sticker" style="display:flex;align-items:center;justify-content:center">
-          <div style="position:relative">
-            <div style="position:absolute;inset:-30px;background:radial-gradient(circle,rgba(253,184,39,.2) 0%,transparent 70%);border-radius:50%"></div>
-            <img src="https://raw.githubusercontent.com/beardlaws/beardwalksin/main/beard-was-here-sticker.png"
-                 alt="Beard Was Here"
-                 style="width:340px;height:340px;object-fit:contain;position:relative;filter:drop-shadow(0 8px 40px rgba(253,184,39,.35)) drop-shadow(0 2px 12px rgba(0,0,0,.9));animation:float 4.5s ease-in-out infinite"
-                 onerror="this.style.display='none'" />
-          </div>
+    <div class="hero-glow"></div>
+    <div style="position:absolute;right:0;top:10%;bottom:10%;width:3px;opacity:.18" class="gold-bar-v"></div>
+    <div class="container" style="position:relative;padding-top:40px;padding-bottom:60px">
+      <div style="max-width:680px">
+        <div class="badge badge-gold" style="margin-bottom:22px;font-size:12px">🎬 New Stops Drop Weekly</div>
+        <h1 style="font-size:clamp(64px,11vw,130px);line-height:.88;margin-bottom:26px">Beard<br><span class="gold-text">Walks In.</span></h1>
+        <p style="font-size:17px;color:var(--blk-light);line-height:1.75;max-width:460px;margin-bottom:38px">Local restaurants, bars, breweries, barbershops, and hidden gems — discovered on video, reviewed honest. No sponsorships. Just Beard.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-lg" onclick="go('stops')">Browse All Stops →</button>
+          <button class="btn btn-secondary btn-lg" onclick="go('map')">View the Map</button>
         </div>
       </div>
     </div>
-
-    <div style="position:absolute;bottom:0;left:0;right:0;height:100px;background:linear-gradient(transparent,var(--blk-deep));z-index:2"></div>
   </section>
 
-  <!-- CATEGORY FILTER -->
-  <div style="padding:24px 0;border-bottom:1px solid var(--blk-line);background:var(--blk-card)">
+  <div style="padding:28px 0;border-bottom:1px solid var(--blk-line);background:var(--blk-card)">
     <div class="container">
       <div class="scroll-x" style="display:flex;gap:10px;padding-bottom:2px">
-        <button class="pill active" onclick="homeFilter(this,'all')">🔥 All Stops</button>
+        <button class="pill active" onclick="homeFilter(this,'all')">All Stops</button>
         <button class="pill" onclick="homeFilter(this,'restaurant')">🍽️ Restaurant</button>
         <button class="pill" onclick="homeFilter(this,'bar')">🍺 Bar</button>
         <button class="pill" onclick="homeFilter(this,'brewery')">🍻 Brewery</button>
@@ -351,118 +268,49 @@ textarea.input{min-height:110px;resize:vertical}
     </div>
   </div>
 
-  <!-- RECENT STOPS -->
   <section class="section">
     <div class="container">
-      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px">
-        <div>
-          <div class="section-eyebrow"><span>Fresh Drops</span></div>
-          <h2 style="font-size:52px">Recent Stops</h2>
-        </div>
-        <button class="btn btn-ghost" onclick="go('stops')" style="color:var(--gold)">View all →</button>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:32px;flex-wrap:wrap;gap:12px">
+        <h2 style="font-size:46px">Recent Stops</h2>
+        <button class="btn btn-ghost" onclick="go('stops')">View all →</button>
       </div>
       <div class="stop-grid" id="home-grid">
-        <div class="skel" style="height:380px"></div>
-        <div class="skel" style="height:380px"></div>
-        <div class="skel" style="height:380px"></div>
+        <div class="skel" style="height:340px"></div>
+        <div class="skel" style="height:340px"></div>
+        <div class="skel" style="height:340px"></div>
       </div>
     </div>
   </section>
 
-  <!-- WHY TRUST BEARD WALKS IN -->
-  <section style="padding:80px 0;background:var(--blk-card);border-top:1px solid var(--blk-line);border-bottom:1px solid var(--blk-line)">
-    <div class="container">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
-        <div>
-          <div class="section-eyebrow"><span>Why Trust Us</span></div>
-          <h2 style="font-size:52px;margin-bottom:20px">No Influencer BS.<br>Just Real Talk.</h2>
-          <p style="color:var(--blk-light);font-size:16px;line-height:1.8;margin-bottom:24px">Beard isn't a food critic with a fancy palate. He's a regular guy who loves finding good spots in small towns that most people drive right past.</p>
-          <p style="color:var(--blk-muted);font-size:15px;line-height:1.75;margin-bottom:32px">Every stop is paid for out of pocket. Nobody gets advance notice. Nobody gets special treatment. If the food's bad, you'll hear about it. If the vibe is off, Beard will say so.</p>
-          <div style="display:flex;gap:16px;flex-wrap:wrap">
-            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--gold);font-size:18px">✓</span><span style="color:var(--blk-light);font-size:14px;font-weight:600">Zero paid placements</span></div>
-            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--gold);font-size:18px">✓</span><span style="color:var(--blk-light);font-size:14px;font-weight:600">Every stop is filmed on video</span></div>
-            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--gold);font-size:18px">✓</span><span style="color:var(--blk-light);font-size:14px;font-weight:600">No advance notice to businesses</span></div>
-            <div style="display:flex;align-items:center;gap:8px"><span style="color:var(--gold);font-size:18px">✓</span><span style="color:var(--blk-light);font-size:14px;font-weight:600">Beard pays out of pocket</span></div>
-          </div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-          <div class="card-flat" style="padding:24px;text-align:center">
-            <div style="font-size:42px;margin-bottom:8px">🎬</div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;margin-bottom:6px">Video First</div>
-            <p style="color:var(--blk-muted);font-size:13px;line-height:1.6">Every stop has a real video review. See the place. Hear Beard's take. Make an informed call.</p>
-          </div>
-          <div class="card-flat" style="padding:24px;text-align:center">
-            <div style="font-size:42px;margin-bottom:8px">📍</div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;margin-bottom:6px">Local Focused</div>
-            <p style="color:var(--blk-muted);font-size:13px;line-height:1.6">Small towns. Local owners. The kind of places that deserve more love than they get.</p>
-          </div>
-          <div class="card-flat" style="padding:24px;text-align:center">
-            <div style="font-size:42px;margin-bottom:8px">🎯</div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;margin-bottom:6px">Beard Score</div>
-            <p style="color:var(--blk-muted);font-size:13px;line-height:1.6">Not stars. Not thumbs. A real 10-point breakdown of Food, Vibe, Value, and Service.</p>
-          </div>
-          <div class="card-flat" style="padding:24px;text-align:center">
-            <div style="font-size:42px;margin-bottom:8px">🏆</div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;margin-bottom:6px">Beard Was Here</div>
-            <p style="color:var(--blk-muted);font-size:13px;line-height:1.6">The highest honor. If a stop earns the stamp, it's the real deal. Period.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TOP PICKS -->
-  <section class="section">
-    <div class="container">
-      <div style="display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:36px;flex-wrap:wrap;gap:12px">
-        <div>
-          <div class="section-eyebrow"><span>Highest Rated</span></div>
-          <h2 style="font-size:52px">Top Picks</h2>
-        </div>
-        <button class="btn btn-ghost" onclick="go('leaderboard')" style="color:var(--gold)">Full rankings →</button>
-      </div>
-      <div class="stop-grid" id="top-picks-grid">
-        <div class="skel" style="height:380px"></div>
-        <div class="skel" style="height:380px"></div>
-        <div class="skel" style="height:380px"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- MAP CTA -->
-  <div style="background:var(--blk-card);border-top:1px solid var(--blk-line);border-bottom:1px solid var(--blk-line);padding:64px 0">
-    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap">
+  <div style="background:var(--blk-card);border-top:1px solid var(--blk-line);border-bottom:1px solid var(--blk-line);padding:56px 0">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap">
       <div>
-        <div class="section-eyebrow"><span>Interactive Map</span></div>
-        <h2 style="font-size:44px;margin-bottom:10px">Find Stops Near You</h2>
-        <p style="color:var(--blk-muted);font-size:15px;max-width:400px">Every stop is pinned on the map. Filter by category. Click a pin for a quick preview.</p>
+        <h2 style="font-size:40px;margin-bottom:8px">Find Stops Near You</h2>
+        <p style="color:var(--blk-muted);font-size:15px">Every stop is pinned on the map. Centered on the North Country.</p>
       </div>
       <button class="btn btn-primary btn-lg" onclick="go('map')">🗺️ Open the Map</button>
     </div>
   </div>
 
-  <!-- SUGGEST CTA -->
-  <section style="padding:96px 0;text-align:center">
-    <div class="container" style="max-width:560px;margin:0 auto">
-      <div style="font-size:56px;margin-bottom:20px">📍</div>
-      <h2 style="font-size:56px;margin-bottom:14px">Know a<br>Good Spot?</h2>
-      <p style="color:var(--blk-muted);font-size:16px;line-height:1.75;margin-bottom:32px">Tell Beard where to walk in next. A hidden gem. A local institution. A place people don't know about yet.</p>
+  <section style="padding:80px 0;text-align:center">
+    <div class="container" style="max-width:520px;margin:0 auto">
+      <div style="font-size:52px;margin-bottom:18px">📍</div>
+      <h2 style="font-size:52px;margin-bottom:14px">Know a Good Spot?</h2>
+      <p style="color:var(--blk-muted);font-size:16px;line-height:1.75;margin-bottom:28px">Tell Beard where to walk in next. If it's worth a visit, it deserves a review.</p>
       <button class="btn btn-primary btn-lg" onclick="go('suggest')">Suggest a Stop →</button>
     </div>
   </section>
+</div>
 
-</div><!-- /home -->
-
-<!-- ═══════════════ STOPS ═══════════════ -->
+<!-- STOPS -->
 <div id="page-stops" class="page">
   <div class="container" style="padding-top:44px;padding-bottom:80px">
-    <div style="margin-bottom:32px">
-      <div class="section-eyebrow"><span>The Full List</span></div>
-      <h1 style="font-size:64px">All Stops</h1>
-      <p style="color:var(--blk-muted);font-size:14px;margin-top:6px" id="stops-count"></p>
+    <div style="margin-bottom:28px">
+      <h1 style="font-size:60px">All Stops</h1>
+      <p style="color:var(--blk-muted);font-size:14px;margin-top:4px" id="stops-count"></p>
     </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:32px;align-items:center">
-      <input class="input" id="s-search" placeholder="🔍  Search name, town, vibe…" style="flex:1;min-width:200px;max-width:300px" oninput="renderStops()" />
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px;align-items:center">
+      <input class="input" id="s-search" placeholder="🔍  Search by name, town…" style="flex:1;min-width:200px;max-width:280px" oninput="renderStops()" />
       <select class="input" id="s-cat" style="flex:1;min-width:150px;max-width:180px" onchange="renderStops()">
         <option value="">All Categories</option>
         <option value="restaurant">🍽️ Restaurant</option><option value="bar">🍺 Bar</option>
@@ -474,22 +322,22 @@ textarea.input{min-height:110px;resize:vertical}
         <option value="">All States</option>
       </select>
       <label style="display:flex;align-items:center;gap:7px;color:var(--blk-light);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap">
-        <input type="checkbox" id="s-approved" onchange="renderStops()" style="accent-color:var(--gold);width:15px;height:15px" />Beard Was Here
+        <input type="checkbox" id="s-approved" onchange="renderStops()" style="accent-color:var(--gold);width:15px;height:15px" />Beard Approved
       </label>
     </div>
     <div class="stop-grid" id="stops-grid"></div>
     <div id="stops-empty" style="display:none;text-align:center;padding:80px 0">
-      <div style="font-size:52px;margin-bottom:16px">🔍</div>
-      <h3 style="font-size:32px;margin-bottom:8px">No stops found</h3>
+      <div style="font-size:48px;margin-bottom:16px">🔍</div>
+      <h3 style="font-size:30px;margin-bottom:8px">No stops found</h3>
       <p style="color:var(--blk-muted)">Try adjusting your filters.</p>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ STOP DETAIL ═══════════════ -->
+<!-- STOP DETAIL -->
 <div id="page-stop" class="page"><div id="stop-detail"></div></div>
 
-<!-- ═══════════════ MAP ═══════════════ -->
+<!-- MAP -->
 <div id="page-map" class="page">
   <div class="map-layout">
     <aside class="map-sidebar">
@@ -509,29 +357,27 @@ textarea.input{min-height:110px;resize:vertical}
   </div>
 </div>
 
-<!-- ═══════════════ LEADERBOARD ═══════════════ -->
+<!-- LEADERBOARD -->
 <div id="page-leaderboard" class="page">
   <div class="container" style="padding-top:44px;padding-bottom:80px">
-    <div class="section-eyebrow" style="margin-bottom:12px"><span>Ranked</span></div>
-    <h1 style="font-size:64px;margin-bottom:6px">The Rankings</h1>
-    <p style="color:var(--blk-muted);margin-bottom:32px">Beard's top stops, sorted by Beard Score.</p>
-    <div style="display:flex;gap:4px;margin-bottom:36px;background:var(--blk-card);padding:6px;border-radius:10px;border:1px solid var(--blk-line);width:fit-content;flex-wrap:wrap">
+    <h1 style="font-size:60px;margin-bottom:6px">The Rankings</h1>
+    <p style="color:var(--blk-muted);margin-bottom:32px">Beard's top stops, sorted by rating.</p>
+    <div style="display:flex;gap:4px;margin-bottom:32px;background:var(--blk-card);padding:6px;border-radius:10px;border:1px solid var(--blk-line);width:fit-content;flex-wrap:wrap">
       <button class="atab active" onclick="lbTab(this,'rating_overall')">Overall</button>
       <button class="atab" onclick="lbTab(this,'rating_food')">Food</button>
       <button class="atab" onclick="lbTab(this,'rating_vibe')">Vibe</button>
       <button class="atab" onclick="lbTab(this,'rating_service')">Service</button>
       <button class="atab" onclick="lbTab(this,'rating_value')">Value</button>
     </div>
-    <div id="lb-list" style="display:flex;flex-direction:column;gap:12px;max-width:760px"></div>
+    <div id="lb-list" style="display:flex;flex-direction:column;gap:12px;max-width:720px"></div>
   </div>
 </div>
 
-<!-- ═══════════════ SUGGEST ═══════════════ -->
+<!-- SUGGEST -->
 <div id="page-suggest" class="page">
-  <div class="container" style="padding-top:44px;padding-bottom:80px;max-width:640px">
-    <div class="section-eyebrow" style="margin-bottom:12px"><span>Community</span></div>
-    <h1 style="font-size:60px;margin-bottom:12px">Tell Beard<br>Where to Walk In</h1>
-    <p style="color:var(--blk-muted);font-size:16px;line-height:1.7;margin-bottom:36px">Know a restaurant, bar, brewery, barbershop, or hidden gem that deserves the Beard treatment? Drop it here. Beard reads every single one.</p>
+  <div class="container" style="padding-top:44px;padding-bottom:80px;max-width:620px">
+    <h1 style="font-size:60px;margin-bottom:10px">Tell Beard<br>Where to Walk In</h1>
+    <p style="color:var(--blk-muted);font-size:16px;line-height:1.7;margin-bottom:36px">Know a restaurant, bar, brewery, barbershop, or hidden gem that deserves the Beard treatment? Drop it here.</p>
     <div class="card-flat" style="padding:32px">
       <form id="sug-form" onsubmit="doSuggest(event)">
         <div style="display:flex;flex-direction:column;gap:18px">
@@ -541,13 +387,13 @@ textarea.input{min-height:110px;resize:vertical}
             <div><label class="label">State *</label><select class="input" name="state" required><option value="">Select…</option><option selected>NY</option><option>PA</option><option>OH</option><option>VT</option><option>MA</option><option>CT</option><option>NJ</option><option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NM</option><option>NC</option><option>ND</option><option>OK</option><option>OR</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option></select></div>
           </div>
           <div><label class="label">Category</label><select class="input" name="category"><option value="">Pick one…</option><option value="restaurant">🍽️ Restaurant</option><option value="bar">🍺 Bar</option><option value="brewery">🍻 Brewery</option><option value="barbershop">✂️ Barbershop</option><option value="coffee">☕ Coffee</option><option value="diner">🥞 Diner</option><option value="shop">🛍️ Shop</option><option value="unique">⭐ Unique</option></select></div>
-          <div><label class="label">Why should Beard walk in?</label><textarea class="input" name="why_beard" placeholder="What makes this place special? What should Beard order? Why is it worth the drive?"></textarea></div>
+          <div><label class="label">Why should Beard walk in?</label><textarea class="input" name="why_beard" placeholder="What makes this place special? What should Beard order?"></textarea></div>
           <div><label class="label">Website (optional)</label><input class="input" name="website" type="url" placeholder="https://…" /></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
             <div><label class="label">Your Name</label><input class="input" name="submitter_name" placeholder="Optional" /></div>
             <div><label class="label">Your Email</label><input class="input" name="submitter_email" type="email" placeholder="Optional" /></div>
           </div>
-          <button type="submit" class="btn btn-primary btn-full" style="padding:15px;font-size:15px">Submit →</button>
+          <button type="submit" class="btn btn-primary btn-full" style="padding:14px;font-size:15px">Submit →</button>
         </div>
       </form>
       <div id="sug-ok" style="display:none;text-align:center;padding:40px 0">
@@ -560,23 +406,23 @@ textarea.input{min-height:110px;resize:vertical}
   </div>
 </div>
 
-<!-- ═══════════════ ABOUT ═══════════════ -->
+<!-- ABOUT -->
 <div id="page-about" class="page">
-  <div class="container" style="padding-top:56px;padding-bottom:80px;max-width:760px">
-    <div class="section-eyebrow" style="margin-bottom:12px"><span>The Story</span></div>
-    <h1 style="font-size:76px;margin-bottom:44px">About<br><span class="gold-text">Beard Walks In</span></h1>
+  <div class="container" style="padding-top:56px;padding-bottom:80px;max-width:740px">
+    <h1 style="font-size:76px">About</h1>
+    <div class="gold-bar" style="height:3px;width:72px;margin:14px 0 44px;border-radius:2px"></div>
     <div style="display:flex;flex-direction:column;gap:28px;color:var(--blk-pale);font-size:16px;line-height:1.85">
-      <p>Beard Walks In started with a simple idea: there are incredible local spots hidden in small towns across America, and most people never find them because nobody's out there talking about them.</p>
-      <p>So Beard walks in. No reservations. No press passes. No advance notice. Just a regular guy who loves good food, good vibes, and good people — walking through the door like any other customer and filming what he finds.</p>
-      <p>Every review is honest. Every stop is paid for out of pocket. If a place is great, you'll know it. If it misses, Beard will tell you that too.</p>
+      <p>Beard Walks In is a video-first local discovery platform born out of the Beard Laws Network. The concept is simple: Beard walks into a local restaurant, bar, brewery, barbershop, or hidden gem — orders what looks good, talks to the people, and tells you exactly what he thinks.</p>
+      <p>No PR packages. No sponsored meals. No algorithm-chasing. Just an honest look at the places that make local communities worth living in.</p>
+      <p>Every stop on this site has been visited in person and reviewed on video. If it's got the <strong style="color:var(--gold)">Beard Approved</strong> badge, that means it's the real deal.</p>
       <div class="card-flat" style="padding:28px;border-left:3px solid var(--gold);border-radius:0 14px 14px 0;background:var(--blk-surf)">
         <h3 style="font-size:24px;margin-bottom:8px">Part of the Beard Laws Network</h3>
         <p style="color:var(--blk-muted);font-size:15px">Find the full Beard Laws universe at <a href="https://youtube.com/@BeardLawsNetwork" target="_blank" style="color:var(--gold);text-decoration:none">YouTube @BeardLawsNetwork</a>.</p>
       </div>
       <div>
-        <h3 style="font-size:32px;margin-bottom:14px">The Beard Was Here Stamp</h3>
-        <p style="margin-bottom:18px">Not every stop earns it. Good food, good vibe, good people — and something that makes it worth going out of your way for. That's the standard.</p>
-        <div class="bwh-stamp">★ BEARD WAS HERE</div>
+        <h3 style="font-size:32px;margin-bottom:14px">The Beard Approved Badge</h3>
+        <p style="margin-bottom:18px">Good food or product, good vibe, good people — that's the standard.</p>
+        <div class="beard-stamp">★ BEARD APPROVED</div>
       </div>
       <div>
         <h3 style="font-size:32px;margin-bottom:14px">Want Beard to Visit?</h3>
@@ -587,20 +433,20 @@ textarea.input{min-height:110px;resize:vertical}
   </div>
 </div>
 
-<!-- ═══════════════ FOR BUSINESSES ═══════════════ -->
+<!-- FOR BUSINESSES -->
 <div id="page-businesses" class="page">
-  <div class="container" style="padding-top:56px;padding-bottom:80px;max-width:800px">
-    <div class="section-eyebrow" style="margin-bottom:12px"><span>Get Featured</span></div>
-    <h1 style="font-size:72px;margin-bottom:44px">For Businesses</h1>
-    <p style="font-size:18px;color:var(--blk-pale);line-height:1.75;margin-bottom:44px">Getting featured on Beard Walks In means a real video review, a permanent listing, and placement on the map — no charge, no strings.</p>
+  <div class="container" style="padding-top:56px;padding-bottom:80px;max-width:780px">
+    <h1 style="font-size:72px">For Businesses</h1>
+    <div class="gold-bar" style="height:3px;width:72px;margin:14px 0 44px;border-radius:2px"></div>
+    <p style="font-size:18px;color:var(--blk-pale);line-height:1.75;margin-bottom:44px">Getting featured on Beard Walks In means a real video review, a permanent listing on this site, and placement on the map.</p>
     <div style="display:flex;flex-direction:column;gap:16px;margin-bottom:44px">
       <div class="card-flat" style="padding:24px;display:flex;gap:20px;align-items:flex-start"><span style="font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--gold);line-height:1;min-width:48px">1</span><div><h3 style="font-size:22px;margin-bottom:6px">Someone Submits Your Place</h3><p style="color:var(--blk-muted);font-size:15px;line-height:1.6">A customer, employee, or you submit via the Suggest a Stop form. Beard reads every submission.</p></div></div>
       <div class="card-flat" style="padding:24px;display:flex;gap:20px;align-items:flex-start"><span style="font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--gold);line-height:1;min-width:48px">2</span><div><h3 style="font-size:22px;margin-bottom:6px">Beard Walks In</h3><p style="color:var(--blk-muted);font-size:15px;line-height:1.6">No heads up. No special treatment. Beard walks in like any other customer and films the honest experience.</p></div></div>
-      <div class="card-flat" style="padding:24px;display:flex;gap:20px;align-items:flex-start"><span style="font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--gold);line-height:1;min-width:48px">3</span><div><h3 style="font-size:22px;margin-bottom:6px">Video + Listing Go Live</h3><p style="color:var(--blk-muted);font-size:15px;line-height:1.6">Video publishes to the Beard Laws Network. Your business gets a permanent listing with video, photos, Beard Score, and map pin.</p></div></div>
-      <div class="card-flat" style="padding:24px;display:flex;gap:20px;align-items:flex-start"><span style="font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--gold);line-height:1;min-width:48px">4</span><div><h3 style="font-size:22px;margin-bottom:6px">Earn the Beard Was Here Stamp</h3><p style="color:var(--blk-muted);font-size:15px;line-height:1.6">If you earn it, Beard grants the official stamp. Hang it in the window. Put it on your website. It means something because it can't be bought.</p></div></div>
+      <div class="card-flat" style="padding:24px;display:flex;gap:20px;align-items:flex-start"><span style="font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--gold);line-height:1;min-width:48px">3</span><div><h3 style="font-size:22px;margin-bottom:6px">Video + Listing Go Live</h3><p style="color:var(--blk-muted);font-size:15px;line-height:1.6">Video publishes to the Beard Laws Network. Your business gets a permanent listing with your video, photos, ratings, and map pin.</p></div></div>
+      <div class="card-flat" style="padding:24px;display:flex;gap:20px;align-items:flex-start"><span style="font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--gold);line-height:1;min-width:48px">4</span><div><h3 style="font-size:22px;margin-bottom:6px">Earn the Badge</h3><p style="color:var(--blk-muted);font-size:15px;line-height:1.6">If you earn it, Beard grants the official Beard Approved badge. Hang it in the window. It means something.</p></div></div>
     </div>
     <div style="text-align:center;padding:44px;background:var(--blk-surf);border-radius:16px;border:1px solid var(--blk-line)">
-      <div class="bwh-stamp" style="margin-bottom:22px">★ BEARD WAS HERE</div>
+      <div class="beard-stamp" style="margin-bottom:22px">★ BEARD APPROVED</div>
       <h3 style="font-size:36px;margin-bottom:10px">Ready to get on the map?</h3>
       <p style="color:var(--blk-muted);margin-bottom:24px">Submit your business and let the community do the rest.</p>
       <button class="btn btn-primary btn-lg" onclick="go('suggest')">Suggest a Stop →</button>
@@ -608,7 +454,7 @@ textarea.input{min-height:110px;resize:vertical}
   </div>
 </div>
 
-<!-- ═══════════════ ADMIN ═══════════════ -->
+<!-- ADMIN -->
 <div id="page-admin" class="page">
   <div id="admin-auth" style="min-height:80vh;display:flex;align-items:center;justify-content:center">
     <div class="card-flat" style="padding:40px;width:100%;max-width:400px">
@@ -638,7 +484,6 @@ textarea.input{min-height:110px;resize:vertical}
       </div>
     </div>
 
-    <!-- Manage Stops -->
     <div id="a-stops" class="admin-section active">
       <div class="container" style="padding-top:32px;padding-bottom:80px">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px">
@@ -647,14 +492,13 @@ textarea.input{min-height:110px;resize:vertical}
         </div>
         <div style="overflow-x:auto;border-radius:12px;border:1px solid var(--blk-line)">
           <table class="data-table">
-            <thead><tr><th>Name</th><th>Town</th><th>Category</th><th>Score</th><th>BWH</th><th>Published</th><th>Actions</th></tr></thead>
+            <thead><tr><th>Name</th><th>Town</th><th>Category</th><th>Rating</th><th>Approved</th><th>Published</th><th>Actions</th></tr></thead>
             <tbody id="a-stops-body"><tr><td colspan="7" style="text-align:center;color:var(--blk-muted);padding:40px">Loading…</td></tr></tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- Suggestions -->
     <div id="a-sugg" class="admin-section">
       <div class="container" style="padding-top:32px;padding-bottom:80px">
         <h2 style="font-size:38px;margin-bottom:20px">Suggestions</h2>
@@ -667,7 +511,6 @@ textarea.input{min-height:110px;resize:vertical}
       </div>
     </div>
 
-    <!-- Add / Edit -->
     <div id="a-add" class="admin-section">
       <div class="container" style="padding-top:32px;padding-bottom:80px;max-width:860px">
         <h2 style="font-size:38px;margin-bottom:28px" id="a-form-title">Add New Stop</h2>
@@ -675,15 +518,13 @@ textarea.input{min-height:110px;resize:vertical}
           <form id="stop-form" onsubmit="saveStop(event)">
             <input type="hidden" id="sf-id" />
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
-              <div style="grid-column:1/-1"><label class="label">Business Name *</label><input class="input" id="sf-name" required placeholder="Bob's Market &amp; Diner" /></div>
-              <div style="grid-column:1/-1"><label class="label">Tagline / One-liner <span style="color:var(--blk-muted);text-transform:none;font-weight:400">(shows on card — make it punchy)</span></label><input class="input" id="sf-tagline" placeholder="e.g. Deep Fried Done Right" /></div>
+              <div style="grid-column:1/-1"><label class="label">Business Name *</label><input class="input" id="sf-name" required placeholder="Rail's End Bar &amp; Grill" /></div>
               <div><label class="label">Town *</label><input class="input" id="sf-town" required placeholder="Canton" /></div>
               <div><label class="label">State *</label><select class="input" id="sf-state" required><option value="">Select…</option><option selected>NY</option><option>PA</option><option>OH</option><option>VT</option><option>MA</option><option>AL</option><option>AK</option><option>AZ</option><option>AR</option><option>CA</option><option>CO</option><option>CT</option><option>DE</option><option>FL</option><option>GA</option><option>HI</option><option>ID</option><option>IL</option><option>IN</option><option>IA</option><option>KS</option><option>KY</option><option>LA</option><option>ME</option><option>MD</option><option>MI</option><option>MN</option><option>MS</option><option>MO</option><option>MT</option><option>NE</option><option>NV</option><option>NH</option><option>NJ</option><option>NM</option><option>NC</option><option>ND</option><option>OK</option><option>OR</option><option>RI</option><option>SC</option><option>SD</option><option>TN</option><option>TX</option><option>UT</option><option>VA</option><option>WA</option><option>WV</option><option>WI</option><option>WY</option></select></div>
               <div><label class="label">Category *</label><select class="input" id="sf-cat" required><option value="">Select…</option><option value="restaurant">🍽️ Restaurant</option><option value="bar">🍺 Bar</option><option value="brewery">🍻 Brewery</option><option value="barbershop">✂️ Barbershop</option><option value="coffee">☕ Coffee</option><option value="diner">🥞 Diner</option><option value="shop">🛍️ Shop</option><option value="unique">⭐ Unique</option></select></div>
               <div><label class="label">Visit Date</label><input class="input" id="sf-date" type="date" /></div>
-              <div style="grid-column:1/-1"><label class="label">Story Moment <span style="color:var(--blk-muted);text-transform:none;font-weight:400">(one memorable line — what makes this place stick)</span></label><input class="input" id="sf-story" placeholder="e.g. The kind of place you stop once and somehow keep going back." /></div>
               <div style="grid-column:1/-1"><label class="label">Description</label><textarea class="input" id="sf-desc" placeholder="What kind of place is this?"></textarea></div>
-              <div style="grid-column:1/-1"><label class="label">Beard's Review</label><textarea class="input" id="sf-review" placeholder="What did Beard think? Be honest."></textarea></div>
+              <div style="grid-column:1/-1"><label class="label">Beard's Review</label><textarea class="input" id="sf-review" placeholder="What did Beard think?"></textarea></div>
               <div style="grid-column:1/-1"><label class="label">YouTube / Vimeo URL</label><input class="input" id="sf-video" type="url" placeholder="https://youtube.com/watch?v=…" /></div>
               <div style="grid-column:1/-1"><label class="label">Thumbnail Image URL</label><input class="input" id="sf-thumb" type="url" placeholder="https://…" /></div>
               <div style="grid-column:1/-1"><label class="label">Address</label><input class="input" id="sf-addr" placeholder="123 Main St, Canton, NY 13617" /></div>
@@ -692,11 +533,8 @@ textarea.input{min-height:110px;resize:vertical}
               <div style="grid-column:1/-1"><label class="label">Website</label><input class="input" id="sf-web" type="url" placeholder="https://…" /></div>
               <div><label class="label">Instagram Handle</label><input class="input" id="sf-ig" placeholder="@handle" /></div>
               <div><label class="label">Facebook URL</label><input class="input" id="sf-fb" type="url" placeholder="https://facebook.com/…" /></div>
-
-              <!-- BEARD SCORE -->
-              <div style="grid-column:1/-1;margin-top:8px;padding:20px;background:var(--blk-surf);border-radius:12px;border:1px solid var(--blk-line)">
-                <div class="label" style="margin-bottom:4px;color:var(--gold)">Beard Score (1.0 – 5.0 · displays as 10-point scale)</div>
-                <p style="font-size:12px;color:var(--blk-muted);margin-bottom:16px">Enter 1-5. A 4.5 displays as 9.0. A 5.0 displays as 10.0.</p>
+              <div style="grid-column:1/-1;margin-top:8px">
+                <div class="label" style="margin-bottom:14px">Ratings (1.0 – 5.0)</div>
                 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px">
                   <div><label class="label">Overall</label><input class="input" id="sf-r0" type="number" min="1" max="5" step="0.1" placeholder="4.5" /></div>
                   <div><label class="label">Food</label><input class="input" id="sf-r1" type="number" min="1" max="5" step="0.1" placeholder="4.5" /></div>
@@ -705,13 +543,11 @@ textarea.input{min-height:110px;resize:vertical}
                   <div><label class="label">Value</label><input class="input" id="sf-r4" type="number" min="1" max="5" step="0.1" placeholder="4.5" /></div>
                 </div>
               </div>
-
               <div style="grid-column:1/-1"><label class="label">Best Thing to Try</label><input class="input" id="sf-best" placeholder="e.g. The smoked brisket sandwich" /></div>
-              <div style="grid-column:1/-1"><label class="label">Tags <span style="color:var(--blk-muted);text-transform:none;font-weight:400">(comma separated: hidden gem, best wings, family friendly, cheap eats, must try)</span></label><input class="input" id="sf-tags" placeholder="hidden gem, best wings, family friendly" /></div>
-              <div><label class="label">Family Friendly Note</label><input class="input" id="sf-fam" placeholder="e.g. Kids menu, great for families" /></div>
+              <div style="grid-column:1/-1"><label class="label">Family Friendly Note</label><input class="input" id="sf-fam" placeholder="e.g. Great for families, kids menu available" /></div>
               <div><label class="label">Would I Go Back?</label><select class="input" id="sf-wgb"><option value="">Select…</option><option value="hell_yes">Hell Yes</option><option value="yes">Yeah, I Would</option><option value="not_my_scene">Not My Scene</option></select></div>
-              <div style="display:flex;align-items:center;gap:22px;padding-top:8px;flex-wrap:wrap">
-                <label style="display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--blk-pale);font-size:14px;font-weight:600"><input type="checkbox" id="sf-approved" style="accent-color:var(--gold);width:16px;height:16px" /> Beard Was Here</label>
+              <div style="display:flex;align-items:center;gap:22px;padding-top:8px">
+                <label style="display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--blk-pale);font-size:14px;font-weight:600"><input type="checkbox" id="sf-approved" style="accent-color:var(--gold);width:16px;height:16px" /> Beard Approved</label>
                 <label style="display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--blk-pale);font-size:14px;font-weight:600"><input type="checkbox" id="sf-pub" style="accent-color:var(--gold);width:16px;height:16px" /> Published</label>
                 <label style="display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--blk-pale);font-size:14px;font-weight:600"><input type="checkbox" id="sf-feat" style="accent-color:var(--gold);width:16px;height:16px" /> Featured</label>
               </div>
@@ -730,45 +566,42 @@ textarea.input{min-height:110px;resize:vertical}
 <!-- FOOTER -->
 <footer id="site-footer" style="background:var(--blk-deep);border-top:1px solid var(--blk-line)">
   <div class="gold-bar" style="height:2px"></div>
-  <div class="container" style="padding:56px 24px 40px">
-    <div style="display:flex;gap:48px;flex-wrap:wrap;justify-content:space-between;margin-bottom:48px">
-      <div style="max-width:360px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-          <img src="https://raw.githubusercontent.com/beardlaws/beardwalksin/main/beard-was-here-sticker.png" alt="" style="height:40px;width:40px;object-fit:contain;border-radius:50%" onerror="this.style.display='none'" />
-          <div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--white);letter-spacing:.04em">Beard Walks In</div>
-            <div style="font-size:9px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase">Small Towns. Big Discoveries.</div>
-          </div>
+  <div class="container" style="padding:52px 20px 40px">
+    <div style="display:flex;gap:48px;flex-wrap:wrap;justify-content:space-between;margin-bottom:44px">
+      <div style="max-width:340px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <span class="gold-bar-v" style="width:3px;height:28px;border-radius:2px;display:block;flex-shrink:0"></span>
+          <span style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--white);letter-spacing:.04em">Beard Walks In</span>
         </div>
-        <p style="color:var(--blk-muted);font-size:14px;line-height:1.7">I go to small town spots so you don't waste your money. Real reviews. No sponsors. No BS.</p>
-        <div style="display:flex;gap:16px;margin-top:20px">
-          <a href="https://youtube.com/@BeardLawsNetwork" target="_blank" style="color:var(--blk-muted);font-size:13px;text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--blk-muted)'">YouTube</a>
-          <a href="https://instagram.com/beardlaws" target="_blank" style="color:var(--blk-muted);font-size:13px;text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--blk-muted)'">Instagram</a>
-          <a href="https://tiktok.com/@beardlaws" target="_blank" style="color:var(--blk-muted);font-size:13px;text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--blk-muted)'">TikTok</a>
+        <p style="color:var(--blk-muted);font-size:14px;line-height:1.7">Local discovery powered by Beard Laws. Restaurants, bars, breweries, barbershops, and hidden gems — reviewed on video.</p>
+        <div style="display:flex;gap:20px;margin-top:16px">
+          <a href="https://youtube.com/@BeardLawsNetwork" target="_blank" style="color:var(--blk-muted);font-size:13px;text-decoration:none">YouTube</a>
+          <a href="https://instagram.com/beardlaws" target="_blank" style="color:var(--blk-muted);font-size:13px;text-decoration:none">Instagram</a>
+          <a href="https://tiktok.com/@beardlaws" target="_blank" style="color:var(--blk-muted);font-size:13px;text-decoration:none">TikTok</a>
         </div>
       </div>
       <div style="display:flex;gap:48px;flex-wrap:wrap">
         <div>
-          <div class="label" style="margin-bottom:14px">Explore</div>
+          <div style="font-size:11px;font-weight:700;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">Explore</div>
           <div style="display:flex;flex-direction:column;gap:10px">
-            <a onclick="go('stops')" style="color:var(--blk-soft);font-size:14px;cursor:pointer;transition:color .2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--blk-soft)'">All Stops</a>
-            <a onclick="go('map')" style="color:var(--blk-soft);font-size:14px;cursor:pointer;transition:color .2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--blk-soft)'">Map</a>
-            <a onclick="go('leaderboard')" style="color:var(--blk-soft);font-size:14px;cursor:pointer;transition:color .2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--blk-soft)'">Leaderboard</a>
+            <a onclick="go('stops')" style="color:var(--blk-soft);font-size:14px;cursor:pointer;text-decoration:none">All Stops</a>
+            <a onclick="go('map')" style="color:var(--blk-soft);font-size:14px;cursor:pointer;text-decoration:none">Map</a>
+            <a onclick="go('leaderboard')" style="color:var(--blk-soft);font-size:14px;cursor:pointer;text-decoration:none">Leaderboard</a>
           </div>
         </div>
         <div>
-          <div class="label" style="margin-bottom:14px">Community</div>
+          <div style="font-size:11px;font-weight:700;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px">Community</div>
           <div style="display:flex;flex-direction:column;gap:10px">
-            <a onclick="go('suggest')" style="color:var(--blk-soft);font-size:14px;cursor:pointer;transition:color .2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--blk-soft)'">Suggest a Stop</a>
-            <a onclick="go('businesses')" style="color:var(--blk-soft);font-size:14px;cursor:pointer;transition:color .2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--blk-soft)'">For Businesses</a>
-            <a onclick="go('about')" style="color:var(--blk-soft);font-size:14px;cursor:pointer;transition:color .2s" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='var(--blk-soft)'">About</a>
+            <a onclick="go('suggest')" style="color:var(--blk-soft);font-size:14px;cursor:pointer;text-decoration:none">Suggest a Stop</a>
+            <a onclick="go('businesses')" style="color:var(--blk-soft);font-size:14px;cursor:pointer;text-decoration:none">For Businesses</a>
+            <a onclick="go('about')" style="color:var(--blk-soft);font-size:14px;cursor:pointer;text-decoration:none">About</a>
           </div>
         </div>
       </div>
     </div>
     <div class="divider" style="padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
       <p style="color:var(--blk-mid);font-size:12px">© 2025 Beard Walks In · Part of the Beard Laws Network</p>
-      <p style="color:var(--blk-mid);font-size:12px">Small Towns. Big Discoveries. Beard Was Here.</p>
+      <p style="color:var(--blk-mid);font-size:12px">Built local. Reviewed honest. Beard approved.</p>
     </div>
   </div>
 </footer>
@@ -777,11 +610,11 @@ textarea.input{min-height:110px;resize:vertical}
 <script>
 'use strict';
 
-// ── CONFIG ─────────────────────────────────────────────
+// ── CONFIG — replace these ─────────────────────────────
 var SUPABASE_URL  = 'https://scqezmnmdwtngvvunfsb.supabase.co';
-var SUPABASE_ANON = 'sb_publishable_iTzfZf9H5P0flPzyJOEjrQ_1Y1BHjW_';
+var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjcWV6bW5tZHd0bmd2dnVuZnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMDI3MjAsImV4cCI6MjA5Mjg3ODcyMH0.Ff4P2U7O11iHZTMArgWBZT3sNaGpkN5UKAL7G7wSEzo';
 
-// ── STATE ──────────────────────────────────────────────
+// ── ALL STATE UP FRONT (no hoisting issues) ────────────
 var sb          = null;
 var allStops    = [];
 var currentPage = 'home';
@@ -793,9 +626,6 @@ var adminUser   = null;
 var adminStops  = [];
 var editingId   = null;
 var menuOpen    = false;
-
-var MAP_CENTER = [44.59, -75.17];
-var MAP_ZOOM   = 9;
 
 var CAT = {
   restaurant:{label:'Restaurant',icon:'🍽️'},
@@ -814,7 +644,11 @@ var WGB = {
   not_my_scene:{label:'Not My Scene',cls:'wgb-nah'},
 };
 
-// ── BOOT ───────────────────────────────────────────────
+// North Country NY — Canton area (near 13669 Waddington)
+var MAP_CENTER = [44.59, -75.17];
+var MAP_ZOOM   = 9;
+
+// ── BOOT ──────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', function() {
   sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
   setupResponsive();
@@ -838,7 +672,7 @@ function setupResponsive() {
   window.addEventListener('resize', check);
 }
 
-// ── ROUTING ────────────────────────────────────────────
+// ── ROUTING ───────────────────────────────────────────
 function go(page, updateHash) {
   if (updateHash === undefined) updateHash = true;
   var valid = ['home','stops','stop','map','leaderboard','suggest','about','businesses','admin'];
@@ -854,7 +688,6 @@ function go(page, updateHash) {
   if (page === 'map')         initMap();
   if (page === 'leaderboard') renderLb();
   if (page === 'admin')       initAdmin();
-  if (page === 'home') { document.title = 'Beard Walks In — I Go So You Know'; }
   window.scrollTo(0,0);
 }
 
@@ -867,28 +700,21 @@ function toggleMenu() {
   document.getElementById('hb3').style.transform = menuOpen ? 'rotate(-45deg) translate(5px,-5px)' : '';
 }
 
-// ── DATA ───────────────────────────────────────────────
+// ── DATA ──────────────────────────────────────────────
 async function loadStops() {
   try {
     var res = await sb.from('stops').select('*, stop_images(*)').eq('published', true).order('visit_date', {ascending:false});
     if (res.error) throw res.error;
     allStops = res.data || [];
     renderHomeGrid();
-    renderTopPicks();
     populateStateFilter();
   } catch(e) {
     console.error(e);
-    toast('Could not load stops — check connection', 'err');
+    toast('Could not load stops — check Supabase config', 'err');
   }
 }
 
-// ── BEARD SCORE HELPER ─────────────────────────────────
-function beardScore(val) {
-  if (!val) return null;
-  return (val * 2).toFixed(1);
-}
-
-// ── HOME ───────────────────────────────────────────────
+// ── HOME ──────────────────────────────────────────────
 function homeFilter(btn, cat) {
   document.querySelectorAll('.pill').forEach(function(p){ p.classList.remove('active'); });
   btn.classList.add('active');
@@ -901,68 +727,10 @@ function renderHomeGrid() {
   if (!grid) return;
   var list = homeCat === 'all' ? allStops : allStops.filter(function(s){ return s.category === homeCat; });
   var show = list.slice(0,6);
-  grid.innerHTML = show.length ? show.map(stopCard).join('') : '<p style="color:var(--blk-muted);grid-column:1/-1;padding:40px 0">No stops in this category yet. Check back soon.</p>';
-
-  // Update hero stats
-  var towns = [];
-  allStops.forEach(function(s){ if (towns.indexOf(s.town) === -1) towns.push(s.town); });
-  var bwh = allStops.filter(function(s){ return s.beard_approved; }).length;
-  var sc = document.getElementById('hero-stops');
-  var tc = document.getElementById('hero-towns');
-  var bc = document.getElementById('hero-bwh');
-  if (sc) sc.textContent = allStops.length;
-  if (tc) tc.textContent = towns.length;
-  if (bc) bc.textContent = bwh || '—';
+  grid.innerHTML = show.length ? show.map(stopCard).join('') : '<p style="color:var(--blk-muted);grid-column:1/-1">No stops in this category yet.</p>';
 }
 
-function renderTopPicks() {
-  var grid = document.getElementById('top-picks-grid');
-  if (!grid) return;
-  var sorted = allStops.filter(function(s){ return s.rating_overall != null; })
-    .sort(function(a,b){ return b.rating_overall - a.rating_overall; })
-    .slice(0,3);
-  grid.innerHTML = sorted.length ? sorted.map(stopCard).join('') : '<p style="color:var(--blk-muted);grid-column:1/-1;padding:40px 0">Ratings coming soon — add Beard Score in admin.</p>';
-}
-
-// ── STOP CARD ──────────────────────────────────────────
-function stopCard(s) {
-  var cat   = CAT[s.category] || {label:s.category, icon:'📍'};
-  var thumb = s.thumbnail_url || placeholder(s);
-  var slug  = s.slug || s.id;
-  var score = beardScore(s.rating_overall);
-  var tags  = parseTags(s.tags);
-
-  var tagsHtml = '';
-  if (s.beard_approved) tagsHtml += '<span class="stop-tag fire">★ Beard Was Here</span>';
-  tags.slice(0,2).forEach(function(t){
-    var cls = t.toLowerCase().includes('gem') ? 'gem' : t.toLowerCase().includes('family') ? 'family' : t.toLowerCase().includes('value') || t.toLowerCase().includes('cheap') ? 'value' : '';
-    tagsHtml += '<span class="stop-tag '+cls+'">'+esc(t)+'</span>';
-  });
-
-  return (
-    '<div class="card" onclick="openStop(\''+esc(slug)+'\')">' +
-      '<div class="stop-thumb-wrap">' +
-        '<img src="'+esc(thumb)+'" alt="'+esc(s.name)+'" class="stop-thumb" onerror="this.src=\''+placeholder(s)+'\'" loading="lazy" />' +
-        '<div style="position:absolute;top:12px;left:12px"><span class="badge badge-dark" style="backdrop-filter:blur(8px);background:rgba(14,13,10,.75)">'+cat.icon+' '+cat.label+'</span></div>' +
-        (score ? '<div style="position:absolute;bottom:12px;right:12px"><div class="mini-score"><div class="mini-score-num">'+score+'</div><div class="mini-score-label">Score</div></div></div>' : '') +
-      '</div>' +
-      '<div class="stop-card-body">' +
-        '<div style="margin-bottom:10px">'+tagsHtml+'</div>' +
-        '<h3 style="font-size:24px;margin-bottom:4px;line-height:1.05">'+esc(s.name)+'</h3>' +
-        (s.tagline ? '<p style="color:var(--gold);font-size:13px;font-weight:600;margin-bottom:8px;font-style:italic">'+esc(s.tagline)+'</p>' : '') +
-        '<p style="color:var(--blk-muted);font-size:13px;margin-bottom:12px">📍 '+esc(s.town)+', '+esc(s.state)+'</p>' +
-        (s.story_moment ? '<p style="color:var(--blk-light);font-size:13px;line-height:1.6;font-style:italic;border-left:2px solid var(--gold);padding-left:10px;">"'+esc(trunc(s.story_moment,90))+'"</p>' : '') +
-      '</div>' +
-    '</div>'
-  );
-}
-
-function parseTags(tagStr) {
-  if (!tagStr) return [];
-  return tagStr.split(',').map(function(t){ return t.trim(); }).filter(Boolean);
-}
-
-// ── STOPS PAGE ─────────────────────────────────────────
+// ── STOPS PAGE ────────────────────────────────────────
 function initStops() { populateStateFilter(); renderStops(); }
 
 function populateStateFilter() {
@@ -979,15 +747,13 @@ function renderStops() {
   var cat      = document.getElementById('s-cat')?.value || '';
   var state    = document.getElementById('s-state')?.value || '';
   var approved = document.getElementById('s-approved')?.checked || false;
-
   var filtered = allStops.filter(function(s) {
     if (cat      && s.category !== cat)   return false;
     if (state    && s.state    !== state) return false;
     if (approved && !s.beard_approved)    return false;
-    if (search   && !(s.name+' '+s.town+' '+(s.description||'')+' '+(s.tagline||'')).toLowerCase().includes(search)) return false;
+    if (search   && !(s.name+' '+s.town+' '+(s.description||'')).toLowerCase().includes(search)) return false;
     return true;
   });
-
   var grid  = document.getElementById('stops-grid');
   var empty = document.getElementById('stops-empty');
   var count = document.getElementById('stops-count');
@@ -997,7 +763,27 @@ function renderStops() {
   grid.innerHTML = filtered.map(stopCard).join('');
 }
 
-// ── STOP DETAIL ────────────────────────────────────────
+// ── STOP CARD ─────────────────────────────────────────
+function stopCard(s) {
+  var cat   = CAT[s.category] || {label:s.category, icon:'📍'};
+  var stars = mkStars(s.rating_overall);
+  var thumb = s.thumbnail_url || placeholder(s);
+  var slug  = s.slug || s.id;
+  return '<div class="card" style="cursor:pointer" onclick="openStop(\''+esc(slug)+'\')">' +
+    '<div style="position:relative;overflow:hidden">' +
+      '<img src="'+esc(thumb)+'" alt="'+esc(s.name)+'" class="stop-thumb" onerror="this.src=\''+placeholder(s)+'\'" loading="lazy" />' +
+      '<div style="position:absolute;top:10px;left:10px"><span class="badge badge-dark">'+cat.icon+' '+cat.label+'</span></div>' +
+      (s.beard_approved ? '<div style="position:absolute;top:10px;right:10px"><span class="badge badge-gold">★ Approved</span></div>' : '') +
+    '</div>' +
+    '<div style="padding:18px">' +
+      '<h3 style="font-size:22px;margin-bottom:4px;line-height:1.1">'+esc(s.name)+'</h3>' +
+      '<p style="color:var(--blk-muted);font-size:13px;margin-bottom:10px">📍 '+esc(s.town)+', '+esc(s.state)+'</p>' +
+      (s.rating_overall ? '<div class="stars" style="font-size:14px;margin-bottom:8px">'+stars+' <span style="color:var(--blk-soft);font-size:13px;font-family:\'DM Sans\',sans-serif">'+s.rating_overall.toFixed(1)+'</span></div>' : '') +
+      (s.best_thing_to_try ? '<p style="color:var(--blk-muted);font-size:13px;font-style:italic">"'+esc(trunc(s.best_thing_to_try,60))+'"</p>' : '') +
+    '</div></div>';
+}
+
+// ── STOP DETAIL ───────────────────────────────────────
 function openStop(slugOrId) {
   var s = allStops.find(function(x){ return x.slug === slugOrId || x.id === slugOrId; });
   if (!s) return;
@@ -1009,153 +795,71 @@ function renderDetail(s) {
   var cat    = CAT[s.category] || {label:s.category, icon:'📍'};
   var wgb    = s.would_go_back ? WGB[s.would_go_back] : null;
   var images = s.stop_images || [];
-  var tags   = parseTags(s.tags);
+  var rBars  = [{label:'Food',val:s.rating_food},{label:'Vibe',val:s.rating_vibe},{label:'Service',val:s.rating_service},{label:'Value',val:s.rating_value}].filter(function(r){ return r.val != null; });
 
-  var scores = [
-    {label:'Food',    val:s.rating_food},
-    {label:'Vibe',    val:s.rating_vibe},
-    {label:'Service', val:s.rating_service},
-    {label:'Value',   val:s.rating_value},
-  ].filter(function(r){ return r.val != null; });
-
-  var h = '<div class="container" style="padding-top:32px;padding-bottom:80px">';
-
-  // Breadcrumb
-  h += '<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--blk-muted);margin-bottom:24px;flex-wrap:wrap">';
-  h += '<span onclick="go(\'home\')" style="cursor:pointer;transition:color .15s" onmouseover="this.style.color=\'var(--gold)\'" onmouseout="this.style.color=\'var(--blk-muted)\'">Home</span> ›';
-  h += '<span onclick="go(\'stops\')" style="cursor:pointer;transition:color .15s" onmouseover="this.style.color=\'var(--gold)\'" onmouseout="this.style.color=\'var(--blk-muted)\'">Stops</span> ›';
+  var h = '<div class="container" style="padding-top:28px;padding-bottom:80px">';
+  h += '<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--blk-muted);margin-bottom:22px;flex-wrap:wrap">';
+  h += '<span onclick="go(\'home\')" style="cursor:pointer">Home</span> › ';
+  h += '<span onclick="go(\'stops\')" style="cursor:pointer">Stops</span> › ';
   h += '<span style="color:var(--blk-soft)">'+esc(s.name)+'</span></div>';
 
-  // Video / thumb
-  if (s.video_url) {
-    h += '<div class="video-wrap" style="margin-bottom:36px">'+videoEmbed(s.video_url)+'</div>';
-  } else if (s.thumbnail_url) {
-    h += '<img src="'+esc(s.thumbnail_url)+'" alt="'+esc(s.name)+'" style="width:100%;max-height:500px;object-fit:cover;border-radius:16px;margin-bottom:36px" />';
-  }
+  if (s.video_url) h += '<div class="video-wrap" style="margin-bottom:32px">'+videoEmbed(s.video_url)+'</div>';
+  else if (s.thumbnail_url) h += '<img src="'+esc(s.thumbnail_url)+'" alt="'+esc(s.name)+'" style="width:100%;max-height:460px;object-fit:cover;border-radius:14px;margin-bottom:32px" />';
 
   h += '<div class="detail-grid"><div>';
-
-  // Tags + badges
-  h += '<div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center">';
+  h += '<div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap;align-items:center">';
   h += '<span class="badge badge-dark">'+cat.icon+' '+cat.label+'</span>';
-  if (s.beard_approved) h += '<div class="bwh-stamp">★ BEARD WAS HERE</div>';
-  tags.forEach(function(t){ h += '<span class="stop-tag">'+esc(t)+'</span>'; });
+  if (s.beard_approved) h += '<div class="beard-stamp">★ BEARD APPROVED</div>';
   h += '</div>';
-
-  h += '<h1 style="font-size:clamp(38px,5vw,72px);line-height:.92;margin-bottom:8px">'+esc(s.name)+'</h1>';
-  if (s.tagline) h += '<p style="color:var(--gold);font-size:18px;font-weight:600;font-style:italic;margin-bottom:10px">'+esc(s.tagline)+'</p>';
-  h += '<p style="color:var(--blk-muted);font-size:15px;margin-bottom:24px">📍 '+esc(s.town)+', '+esc(s.state)+(s.visit_date ? ' · Visited '+fmtDate(s.visit_date) : '')+'</p>';
-
-  // Story moment
-  if (s.story_moment) {
-    h += '<div style="padding:20px 24px;background:var(--blk-surf);border-radius:12px;border-left:3px solid var(--gold);margin-bottom:24px">';
-    h += '<p style="color:var(--white);font-size:17px;line-height:1.7;font-style:italic">"'+esc(s.story_moment)+'"</p></div>';
-  }
-
-  if (s.description) h += '<p style="color:var(--blk-pale);font-size:16px;line-height:1.85;margin-bottom:24px">'+esc(s.description)+'</p>';
-
-  if (s.review) {
-    h += '<div style="border-left:3px solid var(--gold);padding:18px 22px;background:var(--blk-surf);border-radius:0 14px 14px 0;margin:28px 0">';
-    h += '<div style="font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px">Beard\'s Review</div>';
-    h += '<p style="color:var(--blk-pale);font-size:15px;line-height:1.85">'+esc(s.review)+'</p></div>';
-  }
-
-  if (s.best_thing_to_try) {
-    h += '<div style="margin:24px 0;padding:18px;background:var(--blk-surf);border-radius:12px;border:1px solid var(--blk-line);display:flex;align-items:center;gap:14px">';
-    h += '<span style="font-size:28px">🏆</span>';
-    h += '<div><div style="font-size:11px;font-weight:700;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Best Thing to Try</div>';
-    h += '<p style="color:var(--white);font-size:16px;font-weight:600">'+esc(s.best_thing_to_try)+'</p></div></div>';
-  }
-
-  if (s.family_friendly) {
-    h += '<div style="display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--blk-light);font-size:14px"><span style="font-size:20px">👨‍👩‍👧</span>'+esc(s.family_friendly)+'</div>';
-  }
-
-  // Gallery
+  h += '<h1 style="font-size:clamp(36px,5vw,68px);line-height:.95;margin-bottom:8px">'+esc(s.name)+'</h1>';
+  h += '<p style="color:var(--blk-muted);font-size:15px;margin-bottom:20px">📍 '+esc(s.town)+', '+esc(s.state)+(s.visit_date ? ' · Visited '+fmtDate(s.visit_date) : '')+'</p>';
+  if (s.description) h += '<p style="color:var(--blk-pale);font-size:16px;line-height:1.8;margin-bottom:20px">'+esc(s.description)+'</p>';
+  if (s.review) h += '<div style="border-left:3px solid var(--gold);padding:16px 20px;background:var(--blk-surf);border-radius:0 12px 12px 0;margin:24px 0"><div style="font-size:11px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Beard\'s Review</div><p style="color:var(--blk-pale);font-size:15px;line-height:1.8">'+esc(s.review)+'</p></div>';
+  if (s.best_thing_to_try) h += '<div style="margin:20px 0;padding:16px;background:var(--blk-surf);border-radius:12px;border:1px solid var(--blk-line)"><div style="font-size:11px;font-weight:700;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">🏆 Best Thing to Try</div><p style="color:var(--white);font-size:15px;font-weight:600">'+esc(s.best_thing_to_try)+'</p></div>';
+  if (s.family_friendly) h += '<div style="display:flex;align-items:center;gap:10px;margin:14px 0"><span style="font-size:20px">👨‍👩‍👧</span><span style="color:var(--blk-light);font-size:14px">'+esc(s.family_friendly)+'</span></div>';
   if (images.length) {
-    h += '<div style="margin-top:36px"><h3 style="font-size:26px;margin-bottom:16px">Photos</h3><div class="gal-grid">';
+    h += '<div style="margin-top:32px"><h3 style="font-size:24px;margin-bottom:14px">Photos</h3><div class="gal-grid">';
     images.forEach(function(img){ h += '<img src="'+esc(img.url)+'" alt="'+esc(img.alt||s.name)+'" class="gal-img" onclick="openLightbox(\''+esc(img.url)+'\')" loading="lazy" />'; });
     h += '</div></div>';
   }
-
   h += '</div>';
 
-  // RIGHT SIDEBAR
-  h += '<div style="display:flex;flex-direction:column;gap:16px">';
-
-  // BEARD SCORE
+  // Right sidebar
+  h += '<div style="display:flex;flex-direction:column;gap:14px">';
   if (s.rating_overall) {
-    h += '<div class="card-flat" style="padding:24px;text-align:center;background:linear-gradient(135deg,var(--blk-card),var(--blk-surf))">';
-    h += '<div style="font-size:11px;font-weight:700;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">Beard Score</div>';
-    h += '<div class="beard-score-num" style="font-size:80px;line-height:1">'+beardScore(s.rating_overall)+'</div>';
-    h += '<div style="font-size:11px;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.06em;margin-top:6px">out of 10.0</div>';
-    h += '</div>';
+    h += '<div class="card-flat" style="padding:22px;text-align:center">';
+    h += '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:64px;color:var(--gold);line-height:1">'+s.rating_overall.toFixed(1)+'</div>';
+    h += '<div class="stars" style="font-size:22px;margin:4px 0">'+mkStars(s.rating_overall)+'</div>';
+    h += '<div style="font-size:11px;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.06em;margin-top:4px">Overall Rating</div></div>';
   }
-
-  // Score breakdown
-  if (scores.length) {
-    h += '<div class="card-flat" style="padding:20px;display:flex;flex-direction:column;gap:14px">';
-    h += '<div style="font-size:11px;font-weight:700;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px">Score Breakdown</div>';
-    scores.forEach(function(r){
-      var bs = (r.val * 2).toFixed(1);
-      h += '<div>';
-      h += '<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px">';
-      h += '<span style="color:var(--blk-soft);font-weight:600">'+r.label+'</span>';
-      h += '<span style="color:var(--gold);font-weight:700;font-family:\'Bebas Neue\',sans-serif;font-size:18px">'+bs+'</span></div>';
-      h += '<div class="score-bar-track"><div class="score-bar-fill" style="width:'+Math.round((r.val/5)*100)+'%"></div></div>';
-      h += '</div>';
+  if (rBars.length) {
+    h += '<div class="card-flat" style="padding:18px;display:flex;flex-direction:column;gap:13px">';
+    rBars.forEach(function(r){
+      h += '<div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span style="color:var(--blk-soft);font-weight:600">'+r.label+'</span><span style="color:var(--gold);font-weight:700">'+r.val.toFixed(1)+'</span></div>';
+      h += '<div class="rbar-track"><div class="rbar-fill" style="width:'+Math.round((r.val/5)*100)+'%"></div></div></div>';
     });
     h += '</div>';
   }
-
-  // Would go back
-  if (wgb) {
-    h += '<div class="card-flat" style="padding:16px">';
-    h += '<div class="label" style="margin-bottom:8px">Would Beard Go Back?</div>';
-    h += '<div class="'+wgb.cls+'">'+wgb.label+'</div></div>';
-  }
-
-  // Address
+  if (wgb) h += '<div class="card-flat" style="padding:16px"><div style="font-size:11px;font-weight:700;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Would Beard Go Back?</div><div class="'+wgb.cls+'">'+wgb.label+'</div></div>';
   if (s.address) {
-    h += '<div class="card-flat" style="padding:16px">';
-    h += '<div class="label" style="margin-bottom:8px">📍 Address</div>';
+    h += '<div class="card-flat" style="padding:16px"><div style="font-size:11px;font-weight:700;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">📍 Address</div>';
     h += '<p style="color:var(--blk-pale);font-size:14px;line-height:1.5">'+esc(s.address)+'</p>';
     if (s.latitude && s.longitude) h += '<div id="mini-map-'+s.id+'" style="height:130px;border-radius:8px;margin-top:12px;overflow:hidden"></div>';
     h += '</div>';
   }
-
-  // Links
   if (s.website || s.instagram || s.facebook) {
     h += '<div class="card-flat" style="padding:16px;display:flex;flex-direction:column;gap:10px">';
-    h += '<div class="label" style="margin-bottom:4px">Links</div>';
+    h += '<div style="font-size:11px;font-weight:700;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Links</div>';
     if (s.website)   h += '<a href="'+esc(s.website)+'" target="_blank" rel="noopener" style="color:var(--gold);font-size:14px;text-decoration:none">🌐 Website →</a>';
     if (s.instagram) h += '<a href="https://instagram.com/'+esc(s.instagram.replace('@',''))+'" target="_blank" rel="noopener" style="color:var(--blk-light);font-size:14px;text-decoration:none">📸 '+esc(s.instagram)+'</a>';
     if (s.facebook)  h += '<a href="'+esc(s.facebook)+'" target="_blank" rel="noopener" style="color:var(--blk-light);font-size:14px;text-decoration:none">👍 Facebook</a>';
     h += '</div>';
   }
-
-  // Share
-  h += '<div class="card-flat" style="padding:16px">';
-  h += '<div class="label" style="margin-bottom:10px">Share This Stop</div>';
-  h += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
-  var shareText = encodeURIComponent('Just found '+s.name+' in '+s.town+', '+s.state+' on Beard Walks In 🎬 #BeardWalksIn #BeardLaws');
-  var shareUrl  = encodeURIComponent('https://beardwalksin.com');
-  h += '<a href="https://twitter.com/intent/tweet?text='+shareText+'&url='+shareUrl+'" target="_blank" rel="noopener" style="background:#000;color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">𝕏 Share</a>';
-  h += '<a href="https://www.facebook.com/sharer/sharer.php?u='+shareUrl+'" target="_blank" rel="noopener" style="background:#1877F2;color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none">Facebook</a>';
-  h += '<button onclick="navigator.clipboard.writeText(\'https://beardwalksin.com\').then(function(){toast(\'Link copied!\',\'ok\')})" style="background:var(--blk-surf);color:var(--blk-pale);padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;border:1px solid var(--blk-line);cursor:pointer">📋 Copy</button>';
-  h += '</div></div>';
-
   h += '<button class="btn btn-secondary btn-full" onclick="go(\'stops\')">← Back to Stops</button>';
   h += '</div></div></div>';
 
   document.getElementById('stop-detail').innerHTML = h;
 
-  // Update page title & meta
-  document.title = s.name + ' in ' + s.town + ', ' + s.state + ' — Beard Walks In';
-  var md = document.querySelector('meta[name="description"]');
-  if (md && s.review) md.setAttribute('content', 'Beard visited '+s.name+' in '+s.town+', '+s.state+'. '+s.review.slice(0,120)+'…');
-
-  // Mini map
   if (s.latitude && s.longitude && s.address) {
     setTimeout(function() {
       try {
@@ -1167,7 +871,7 @@ function renderDetail(s) {
   }
 }
 
-// ── MAP ────────────────────────────────────────────────
+// ── MAP ───────────────────────────────────────────────
 function initMap() {
   if (mapInst) { filterMap(); return; }
   setTimeout(function() {
@@ -1186,21 +890,19 @@ function renderMapPins(stops) {
   mapMarkers = [];
   stops.filter(function(s){ return s.latitude && s.longitude; }).forEach(function(s) {
     var cat  = CAT[s.category] || {icon:'📍'};
-    var score = beardScore(s.rating_overall);
     var icon = L.divIcon({
-      html:'<div style="background:#FDB827;color:#27251F;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:16px;border:2px solid #D99A10;box-shadow:0 2px 12px rgba(0,0,0,.7),0 0 0 4px rgba(253,184,39,.15);cursor:pointer;transition:transform .2s">'+cat.icon+'</div>',
-      className:'',iconSize:[36,36],iconAnchor:[18,18]
+      html:'<div style="background:#FDB827;color:#27251F;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:15px;border:2px solid #D99A10;box-shadow:0 2px 10px rgba(0,0,0,.6);cursor:pointer">'+cat.icon+'</div>',
+      className:'',iconSize:[34,34],iconAnchor:[17,17]
     });
     var slug  = s.slug || s.id;
-    var thumb = s.thumbnail_url ? '<img src="'+esc(s.thumbnail_url)+'" style="width:100%;height:110px;object-fit:cover;border-radius:10px;margin-bottom:10px" />' : '';
-    var scoreHtml = score ? '<div style="display:inline-flex;align-items:center;gap:6px;background:rgba(253,184,39,.12);border:1px solid rgba(253,184,39,.25);border-radius:8px;padding:4px 10px;margin-bottom:8px"><span style="font-family:\'Bebas Neue\',sans-serif;font-size:20px;color:#FDB827;line-height:1">'+score+'</span><span style="font-size:10px;color:#6B6455;text-transform:uppercase;letter-spacing:.06em;font-weight:700">Score</span></div>' : '';
-    var popup = L.popup({maxWidth:230,className:''}).setContent(
-      '<div>'+thumb+scoreHtml+
+    var thumb = s.thumbnail_url ? '<img src="'+esc(s.thumbnail_url)+'" style="width:100%;height:100px;object-fit:cover;border-radius:8px;margin-bottom:10px" />' : '';
+    var stars = s.rating_overall ? '<div style="color:#FDB827;font-size:13px;margin-bottom:8px">'+mkStars(s.rating_overall)+' '+s.rating_overall.toFixed(1)+'</div>' : '';
+    var popup = L.popup({maxWidth:220}).setContent(
+      '<div>'+thumb+
       '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:20px;color:#fff;line-height:1.1;margin-bottom:3px">'+esc(s.name)+'</div>'+
-      (s.tagline ? '<div style="font-size:12px;color:#FDB827;font-style:italic;margin-bottom:6px">'+esc(s.tagline)+'</div>' : '')+
-      '<div style="font-size:12px;color:#6B6455;margin-bottom:10px">📍 '+esc(s.town)+', '+esc(s.state)+'</div>'+
-      '<button onclick="openStop(\''+esc(slug)+'\')" style="background:#FDB827;color:#27251F;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%;font-family:\'DM Sans\',sans-serif">View Full Review →</button>'+
-      '</div>'
+      '<div style="font-size:12px;color:#6B6560;margin-bottom:8px">📍 '+esc(s.town)+', '+esc(s.state)+'</div>'+
+      stars+
+      '<button onclick="openStop(\''+esc(slug)+'\')" style="background:#FDB827;color:#27251F;border:none;border-radius:6px;padding:7px 14px;font-size:13px;font-weight:700;cursor:pointer;width:100%;font-family:\'DM Sans\',sans-serif">View Stop →</button></div>'
     );
     var marker = L.marker([s.latitude,s.longitude],{icon:icon}).addTo(mapInst).bindPopup(popup);
     mapMarkers.push(marker);
@@ -1213,19 +915,18 @@ function renderMapList(stops) {
   var wc = stops.filter(function(s){ return s.latitude && s.longitude; });
   if (!wc.length) { list.innerHTML = '<p style="color:var(--blk-muted);font-size:13px;padding:16px">No stops with coordinates yet.</p>'; return; }
   list.innerHTML = wc.map(function(s) {
-    var cat   = CAT[s.category] || {icon:'📍'};
-    var score = beardScore(s.rating_overall);
-    return '<div style="padding:10px;border-radius:10px;cursor:pointer;border:1px solid transparent;margin-bottom:4px;transition:all .15s"'+
+    var cat = CAT[s.category] || {icon:'📍'};
+    return '<div style="padding:10px;border-radius:10px;cursor:pointer;border:1px solid transparent;margin-bottom:4px;transition:all .12s"'+
       ' onmouseover="this.style.background=\'var(--blk-surf)\';this.style.borderColor=\'var(--blk-line)\'"'+
       ' onmouseout="this.style.background=\'transparent\';this.style.borderColor=\'transparent\'"'+
       ' onclick="flyTo('+s.latitude+','+s.longitude+',\''+esc(s.slug||s.id)+'\')">' +
       '<div style="display:flex;align-items:center;gap:8px">'+
-        '<span style="font-size:18px">'+cat.icon+'</span>'+
+        '<span style="font-size:16px">'+cat.icon+'</span>'+
         '<div style="flex:1;min-width:0">'+
           '<div style="font-size:13px;font-weight:600;color:var(--blk-pale);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(s.name)+'</div>'+
           '<div style="font-size:11px;color:var(--blk-muted)">'+esc(s.town)+', '+esc(s.state)+'</div>'+
         '</div>'+
-        (score ? '<span style="font-family:\'Bebas Neue\',sans-serif;font-size:18px;color:var(--gold)">'+score+'</span>' : '')+
+        (s.beard_approved ? '<span style="color:var(--gold);font-size:12px">★</span>' : '')+
       '</div></div>';
   }).join('');
 }
@@ -1249,7 +950,7 @@ function filterMap() {
   renderMapList(filtered);
 }
 
-// ── LEADERBOARD ────────────────────────────────────────
+// ── LEADERBOARD ───────────────────────────────────────
 function lbTab(btn, field) {
   document.querySelectorAll('#page-leaderboard .atab').forEach(function(t){ t.classList.remove('active'); });
   btn.classList.add('active');
@@ -1261,33 +962,29 @@ function renderLb() {
   var sorted = allStops.filter(function(s){ return s[lbField] != null; })
     .sort(function(a,b){ return b[lbField]-a[lbField]; }).slice(0,25);
   var list = document.getElementById('lb-list');
-  if (!sorted.length) { list.innerHTML = '<p style="color:var(--blk-muted)">No rated stops yet. Add Beard Scores in the admin panel.</p>'; return; }
+  if (!sorted.length) { list.innerHTML = '<p style="color:var(--blk-muted)">No rated stops yet.</p>'; return; }
   list.innerHTML = sorted.map(function(s,i) {
-    var rank  = i+1;
-    var cat   = CAT[s.category] || {icon:'📍',label:s.category};
-    var score = beardScore(s[lbField]);
+    var rank = i+1;
+    var cat  = CAT[s.category] || {icon:'📍',label:s.category};
     var thumb = s.thumbnail_url
-      ? '<img src="'+esc(s.thumbnail_url)+'" style="width:60px;height:60px;border-radius:10px;object-fit:cover;flex-shrink:0" />'
-      : '<div style="width:60px;height:60px;border-radius:10px;background:var(--blk-surf);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0">'+cat.icon+'</div>';
-    return '<div class="card-flat" style="padding:16px 20px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all .2s" onclick="openStop(\''+esc(s.slug||s.id)+'\')"'+
-      ' onmouseover="this.style.borderColor=\'var(--gold-dk)\';this.style.transform=\'translateX(4px)\'"'+
-      ' onmouseout="this.style.borderColor=\'var(--blk-line)\';this.style.transform=\'none\'">' +
+      ? '<img src="'+esc(s.thumbnail_url)+'" style="width:56px;height:56px;border-radius:8px;object-fit:cover;flex-shrink:0" />'
+      : '<div style="width:56px;height:56px;border-radius:8px;background:var(--blk-surf);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0">'+cat.icon+'</div>';
+    return '<div class="card-flat" style="padding:16px 20px;display:flex;align-items:center;gap:16px;cursor:pointer" onclick="openStop(\''+esc(s.slug||s.id)+'\')">' +
       '<div class="lb-rank '+(rank<=3?'top':'')+'">'+rank+'</div>'+thumb+
       '<div style="flex:1;min-width:0">'+
-        '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:24px;line-height:1.1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(s.name)+'</div>'+
-        (s.tagline ? '<div style="font-size:12px;color:var(--gold);font-style:italic;margin-bottom:2px">'+esc(s.tagline)+'</div>' : '')+
+        '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:22px;line-height:1.1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+esc(s.name)+'</div>'+
         '<div style="font-size:13px;color:var(--blk-muted)">'+esc(s.town)+', '+esc(s.state)+' · '+cat.icon+' '+cat.label+'</div>'+
       '</div>'+
       '<div style="text-align:right;flex-shrink:0">'+
-        '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:44px;color:var(--gold);line-height:1">'+score+'</div>'+
-        '<div style="font-size:10px;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.06em">out of 10</div>'+
+        '<div style="font-family:\'Bebas Neue\',sans-serif;font-size:36px;color:var(--gold);line-height:1">'+s[lbField].toFixed(1)+'</div>'+
+        '<div class="stars" style="font-size:12px">'+mkStars(s[lbField])+'</div>'+
       '</div>'+
-      (s.beard_approved ? '<span class="bwh-stamp" style="font-size:11px;padding:3px 8px;transform:rotate(-1deg)">★ BWH</span>' : '')+
+      (s.beard_approved ? '<span class="badge badge-gold">★</span>' : '')+
     '</div>';
   }).join('');
 }
 
-// ── SUGGEST ────────────────────────────────────────────
+// ── SUGGEST ───────────────────────────────────────────
 async function doSuggest(e) {
   e.preventDefault();
   var form = e.target;
@@ -1316,7 +1013,7 @@ function resetSuggest() {
   document.getElementById('sug-ok').style.display = 'none';
 }
 
-// ── ADMIN AUTH ─────────────────────────────────────────
+// ── ADMIN AUTH ────────────────────────────────────────
 async function checkSession() {
   var res = await sb.auth.getSession();
   if (res.data.session) adminUser = res.data.session.user;
@@ -1350,7 +1047,7 @@ async function doLogin() {
 
 async function doLogout() { await sb.auth.signOut(); adminUser = null; showAuthGate(); }
 
-// ── ADMIN STOPS ────────────────────────────────────────
+// ── ADMIN STOPS ───────────────────────────────────────
 async function loadAdminStops() {
   var res = await sb.from('stops').select('*').order('created_at',{ascending:false});
   var body = document.getElementById('a-stops-body');
@@ -1365,15 +1062,14 @@ function renderAdminTable() {
   var body = document.getElementById('a-stops-body');
   if (!rows.length) { body.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--blk-muted);padding:40px">No stops found.</td></tr>'; return; }
   body.innerHTML = rows.map(function(s) {
-    var cat   = CAT[s.category] || {label:s.category,icon:'📍'};
-    var score = beardScore(s.rating_overall);
+    var cat = CAT[s.category] || {label:s.category,icon:'📍'};
     return '<tr>'+
       '<td style="font-weight:600;color:var(--white)">'+esc(s.name)+'</td>'+
       '<td style="color:var(--blk-soft)">'+esc(s.town)+', '+esc(s.state)+'</td>'+
       '<td><span class="badge badge-dark">'+cat.icon+' '+cat.label+'</span></td>'+
-      '<td style="color:var(--gold);font-family:\'Bebas Neue\',sans-serif;font-size:18px">'+(score||'—')+'</td>'+
-      '<td>'+(s.beard_approved?'<span style="color:#2ECC71">✓</span>':'<span style="color:var(--blk-mid)">—</span>')+'</td>'+
-      '<td>'+(s.published?'<span style="color:#2ECC71">Live</span>':'<span style="color:var(--blk-muted)">Draft</span>')+'</td>'+
+      '<td style="color:var(--gold)">'+(s.rating_overall?s.rating_overall.toFixed(1):'—')+'</td>'+
+      '<td>'+(s.beard_approved?'<span style="color:#86EFAC">✓</span>':'<span style="color:var(--blk-mid)">—</span>')+'</td>'+
+      '<td>'+(s.published?'<span style="color:#86EFAC">Live</span>':'<span style="color:var(--blk-muted)">Draft</span>')+'</td>'+
       '<td style="display:flex;gap:6px">'+
         '<button class="btn btn-ghost btn-sm" onclick="editStop(\''+s.id+'\')">Edit</button>'+
         '<button class="btn btn-ghost btn-sm" style="color:#FCA5A5" onclick="deleteStop(\''+s.id+'\',\''+esc(s.name)+'\')">Delete</button>'+
@@ -1387,16 +1083,14 @@ function editStop(id) {
   editingId = id;
   function sv(id,v){ var el=document.getElementById(id); if(el) el.value=v==null?'':v; }
   function sc(id,v){ var el=document.getElementById(id); if(el) el.checked=!!v; }
-  sv('sf-id',s.id); sv('sf-name',s.name); sv('sf-tagline',s.tagline); sv('sf-town',s.town);
-  sv('sf-state',s.state); sv('sf-cat',s.category); sv('sf-date',s.visit_date);
-  sv('sf-story',s.story_moment); sv('sf-desc',s.description); sv('sf-review',s.review);
-  sv('sf-video',s.video_url); sv('sf-thumb',s.thumbnail_url); sv('sf-addr',s.address);
-  sv('sf-lat',s.latitude); sv('sf-lng',s.longitude); sv('sf-web',s.website);
-  sv('sf-ig',s.instagram); sv('sf-fb',s.facebook);
+  sv('sf-id',s.id); sv('sf-name',s.name); sv('sf-town',s.town); sv('sf-state',s.state);
+  sv('sf-cat',s.category); sv('sf-date',s.visit_date); sv('sf-desc',s.description);
+  sv('sf-review',s.review); sv('sf-video',s.video_url); sv('sf-thumb',s.thumbnail_url);
+  sv('sf-addr',s.address); sv('sf-lat',s.latitude); sv('sf-lng',s.longitude);
+  sv('sf-web',s.website); sv('sf-ig',s.instagram); sv('sf-fb',s.facebook);
   sv('sf-r0',s.rating_overall); sv('sf-r1',s.rating_food); sv('sf-r2',s.rating_vibe);
   sv('sf-r3',s.rating_service); sv('sf-r4',s.rating_value);
-  sv('sf-best',s.best_thing_to_try); sv('sf-tags',s.tags); sv('sf-fam',s.family_friendly);
-  sv('sf-wgb',s.would_go_back);
+  sv('sf-best',s.best_thing_to_try); sv('sf-fam',s.family_friendly); sv('sf-wgb',s.would_go_back);
   sc('sf-approved',s.beard_approved); sc('sf-pub',s.published); sc('sf-feat',s.featured);
   document.getElementById('a-form-title').textContent = 'Edit Stop';
   aTab(document.querySelector('[onclick*="a-add"]'),'a-add');
@@ -1407,7 +1101,8 @@ async function deleteStop(id,name) {
   var res = await sb.from('stops').delete().eq('id',id);
   if (res.error) { toast('Delete failed: '+res.error.message,'err'); return; }
   toast('"'+name+'" deleted','ok');
-  await loadAdminStops(); await loadStops();
+  await loadAdminStops();
+  await loadStops();
 }
 
 async function saveStop(e) {
@@ -1419,20 +1114,17 @@ async function saveStop(e) {
   function gn(id){ var v=parseFloat(gv(id)); return isNaN(v)?null:v; }
   var name = gv('sf-name');
   var payload = {
-    name, slug:slugify(name+'-'+gv('sf-town')),
-    tagline:gv('sf-tagline')||null,
+    name:name, slug:slugify(name+'-'+gv('sf-town')),
     town:gv('sf-town'), state:gv('sf-state'), category:gv('sf-cat'),
-    visit_date:gv('sf-date')||null,
-    story_moment:gv('sf-story')||null,
-    description:gv('sf-desc')||null, review:gv('sf-review')||null,
-    video_url:gv('sf-video')||null, thumbnail_url:gv('sf-thumb')||null,
-    address:gv('sf-addr')||null, latitude:gn('sf-lat'), longitude:gn('sf-lng'),
+    visit_date:gv('sf-date')||null, description:gv('sf-desc')||null,
+    review:gv('sf-review')||null, video_url:gv('sf-video')||null,
+    thumbnail_url:gv('sf-thumb')||null, address:gv('sf-addr')||null,
+    latitude:gn('sf-lat'), longitude:gn('sf-lng'),
     website:gv('sf-web')||null, instagram:gv('sf-ig')||null, facebook:gv('sf-fb')||null,
     rating_overall:gn('sf-r0'), rating_food:gn('sf-r1'), rating_vibe:gn('sf-r2'),
     rating_service:gn('sf-r3'), rating_value:gn('sf-r4'),
-    best_thing_to_try:gv('sf-best')||null,
-    tags:gv('sf-tags')||null,
-    family_friendly:gv('sf-fam')||null, would_go_back:gv('sf-wgb')||null,
+    best_thing_to_try:gv('sf-best')||null, family_friendly:gv('sf-fam')||null,
+    would_go_back:gv('sf-wgb')||null,
     beard_approved:gc('sf-approved'), published:gc('sf-pub'), featured:gc('sf-feat'),
     updated_at:new Date().toISOString(),
   };
@@ -1443,7 +1135,8 @@ async function saveStop(e) {
     if (res.error) throw res.error;
     toast(editingId?'Stop updated!':'Stop added!','ok');
     clearStopForm();
-    await loadAdminStops(); await loadStops();
+    await loadAdminStops();
+    await loadStops();
     aTab(document.querySelector('[onclick*="a-stops"]'),'a-stops');
   } catch(err) { toast('Save failed: '+err.message,'err'); }
   btn.disabled=false; btn.textContent='Save Stop →';
@@ -1456,7 +1149,7 @@ function clearStopForm() {
   document.getElementById('a-form-title').textContent='Add New Stop';
 }
 
-// ── ADMIN SUGGESTIONS ──────────────────────────────────
+// ── ADMIN SUGGESTIONS ─────────────────────────────────
 async function loadAdminSugg() {
   var res = await sb.from('suggestions').select('*').order('created_at',{ascending:false});
   var body = document.getElementById('a-sugg-body');
@@ -1485,7 +1178,7 @@ function prefill(r) {
   aTab(document.querySelector('[onclick*="a-add"]'),'a-add');
 }
 
-// ── ADMIN TABS ─────────────────────────────────────────
+// ── ADMIN TABS ────────────────────────────────────────
 function aTab(btn,section) {
   if (!btn) return;
   document.querySelectorAll('.atab').forEach(function(t){ t.classList.remove('active'); });
@@ -1495,18 +1188,16 @@ function aTab(btn,section) {
   if (el) el.classList.add('active');
 }
 
-// ── DATABASE MIGRATION: add new columns if needed ──────
-async function ensureColumns() {
-  // tagline and story_moment columns need to exist in Supabase
-  // Run this SQL in Supabase SQL Editor if stops aren't saving:
-  // ALTER TABLE stops ADD COLUMN IF NOT EXISTS tagline text;
-  // ALTER TABLE stops ADD COLUMN IF NOT EXISTS story_moment text;
-  // ALTER TABLE stops ADD COLUMN IF NOT EXISTS tags text;
+// ── HELPERS ───────────────────────────────────────────
+function mkStars(r) {
+  if (!r) return '';
+  var full=Math.floor(r), half=(r%1)>=.5?1:0, empty=5-full-half;
+  return '★'.repeat(full)+(half?'⯨':'')+'☆'.repeat(empty);
 }
-
-// ── HELPERS ────────────────────────────────────────────
-function beardScore(val) { if (!val) return null; return (val * 2).toFixed(1); }
-function placeholder(s) { var cat=CAT[s.category]||{icon:'📍'}; return 'https://placehold.co/600x338/1A1810/FDB827?text='+encodeURIComponent(cat.icon+' '+s.name); }
+function placeholder(s) {
+  var cat=CAT[s.category]||{icon:'📍'};
+  return 'https://placehold.co/600x338/1E1C17/FDB827?text='+encodeURIComponent(cat.icon+' '+s.name);
+}
 function videoEmbed(url) {
   var yt=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
   if (yt) return '<iframe src="https://www.youtube.com/embed/'+yt[1]+'" allowfullscreen></iframe>';
@@ -1535,11 +1226,82 @@ document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeLight
 </script>
 
 <!--
-IMPORTANT: Run this SQL in Supabase SQL Editor to add new columns:
+════════════════════════════════════════
+SUPABASE SQL — paste in SQL Editor
+════════════════════════════════════════
 
-ALTER TABLE stops ADD COLUMN IF NOT EXISTS tagline text;
-ALTER TABLE stops ADD COLUMN IF NOT EXISTS story_moment text;
-ALTER TABLE stops ADD COLUMN IF NOT EXISTS tags text;
+create table stops (
+  id              uuid primary key default gen_random_uuid(),
+  created_at      timestamptz default now(),
+  updated_at      timestamptz default now(),
+  name            text not null,
+  slug            text not null unique,
+  town            text not null,
+  state           text not null,
+  category        text not null,
+  description     text,
+  review          text,
+  video_url       text,
+  thumbnail_url   text,
+  address         text,
+  latitude        numeric(10,7),
+  longitude       numeric(10,7),
+  website         text,
+  instagram       text,
+  facebook        text,
+  tiktok          text,
+  rating_overall  numeric(3,1),
+  rating_food     numeric(3,1),
+  rating_vibe     numeric(3,1),
+  rating_service  numeric(3,1),
+  rating_value    numeric(3,1),
+  beard_approved  boolean default false,
+  family_friendly text,
+  best_thing_to_try text,
+  would_go_back   text,
+  published       boolean default false,
+  featured        boolean default false,
+  visit_date      date
+);
+
+create table stop_images (
+  id uuid primary key default gen_random_uuid(),
+  stop_id uuid not null references stops(id) on delete cascade,
+  url text not null, alt text, sort_order int default 0,
+  created_at timestamptz default now()
+);
+
+create table suggestions (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz default now(),
+  business_name text not null, town text not null, state text not null,
+  category text, why_beard text, website text,
+  submitter_name text, submitter_email text, status text default 'pending'
+);
+
+alter table stops enable row level security;
+alter table stop_images enable row level security;
+alter table suggestions enable row level security;
+
+create policy "Public read published stops" on stops for select using (published = true);
+create policy "Public read images" on stop_images for select using (true);
+create policy "Public insert suggestions" on suggestions for insert with check (true);
+create policy "Admin all stops" on stops for all using (auth.role() = 'authenticated');
+create policy "Admin all images" on stop_images for all using (auth.role() = 'authenticated');
+create policy "Admin read suggestions" on suggestions for select using (auth.role() = 'authenticated');
+
+════════════════════════════════════════
+LAUNCH STEPS
+════════════════════════════════════════
+1. Supabase → Project Settings → API → copy URL + anon key
+   Paste into SUPABASE_URL and SUPABASE_ANON at top of <script>
+
+2. Supabase → Authentication → Users → Add User
+   Set your email + password (this is your admin login)
+
+3. Vercel → vercel.com → Add New Project → drag this file → Deploy
+
+4. Visit yoursite.vercel.app/#admin to manage stops
 -->
 </body>
 </html>

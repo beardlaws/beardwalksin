@@ -3,19 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Beard Walks In — Small Towns. Big Discoveries.</title>
-<meta name="description" content="Beard walks into local restaurants, bars, breweries, barbershops, and hidden gems across small towns — reviewed honest on video. No PR. No sponsors. Just Beard." />
-<meta name="keywords" content="local restaurants, small town food, beard laws, local discovery, North Country NY, hidden gems, local bars, breweries, barbershops" />
-<link rel="canonical" href="https://beardwalksin.com" />
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="Beard Walks In" />
-<meta property="og:title" content="Beard Walks In — Small Towns. Big Discoveries." />
-<meta property="og:description" content="Beard walks into local restaurants, bars, breweries, and hidden gems — reviewed honest on video. No PR. No sponsors. Just Beard." />
-<meta property="og:url" content="https://beardwalksin.com" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:site" content="@beardlaws" />
-<meta name="twitter:title" content="Beard Walks In — Small Towns. Big Discoveries." />
-<meta name="twitter:description" content="Beard walks into local restaurants, bars, breweries and hidden gems — reviewed honest on video." />
+<title>Beard Walks In</title>
+<meta name="description" content="Local discovery powered by Beard Laws. Restaurants, bars, breweries, barbershops, and hidden gems — reviewed on video." />
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
@@ -100,7 +89,7 @@ textarea.input{min-height:110px;resize:vertical}
 .rbar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold-dk),var(--gold));transition:width .6s ease}
 
 /* Beard stamp */
-.beard-stamp{display:inline-flex;align-items:center;gap:6px;padding:6px 16px;border:3px solid var(--gold);border-radius:4px;color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.12em;transform:rotate(-2deg);text-shadow:0 0 8px rgba(253,184,39,.4);box-shadow:0 0 0 1px rgba(253,184,39,.3) inset;opacity:.95;position:relative;background:rgba(253,184,39,.04)}
+.beard-stamp{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border:2px solid var(--gold);border-radius:4px;color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:.1em;transform:rotate(-2deg)}
 
 /* WGB */
 .wgb-hell{background:#14532D;color:#86EFAC;border-radius:8px;padding:9px 16px;font-weight:700;font-size:14px;display:inline-block}
@@ -204,14 +193,8 @@ textarea.input{min-height:110px;resize:vertical}
   <div class="nav-inner">
     <div class="container" style="display:flex;align-items:center;justify-content:space-between;height:60px">
       <a onclick="go('home')" style="display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none">
-        <img src="https://i.imgur.com/placeholder.png" id="nav-logo" alt="Beard Walks In" style="height:48px;width:48px;object-fit:contain;border-radius:50%;display:none" />
-        <div style="display:flex;align-items:center;gap:8px">
-          <span class="gold-bar-v" style="width:3px;height:30px;border-radius:2px;display:block;flex-shrink:0"></span>
-          <div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--white);letter-spacing:.04em;line-height:1">Beard Walks In</div>
-            <div style="font-size:10px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase;line-height:1;margin-top:2px">Small Towns. Big Discoveries.</div>
-          </div>
-        </div>
+        <span class="gold-bar-v" style="width:3px;height:30px;border-radius:2px;display:block;flex-shrink:0"></span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--white);letter-spacing:.04em;line-height:1">Beard Walks In</span>
       </a>
       <nav id="desk-nav" style="display:flex;align-items:center;gap:2px">
         <a class="nav-link" onclick="go('stops')">Stops</a>
@@ -253,69 +236,21 @@ textarea.input{min-height:110px;resize:vertical}
 
 <!-- HOME -->
 <div id="page-home" class="page active">
-  <section class="hero" style="min-height:92vh">
-    <!-- Grain texture overlay -->
-    <div style="position:absolute;inset:0;opacity:.045;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><filter id=%22n%22><feTurbulence type=%22fractalNoise%22 baseFrequency=%220.9%22 numOctaves=%224%22 stitchTiles=%22stitch%22/></filter><rect width=%22200%22 height=%22200%22 filter=%22url(%23n)%22 opacity=%221%22/></svg>');background-size:200px;pointer-events:none;z-index:1"></div>
-    <!-- Gold radial glow left -->
-    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 55% 70% at 15% 55%,rgba(253,184,39,.13) 0%,transparent 65%);pointer-events:none;z-index:1"></div>
-    <!-- Subtle diagonal lines -->
-    <div style="position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,transparent,transparent 40px,rgba(253,184,39,.012) 40px,rgba(253,184,39,.012) 41px);pointer-events:none;z-index:1"></div>
-
-    <div class="container" style="position:relative;z-index:2;padding-top:60px;padding-bottom:80px;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:center">
-      <!-- Left: Text -->
-      <div style="max-width:620px">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px">
-          <div style="width:32px;height:2px;background:var(--gold);border-radius:2px"></div>
-          <span style="font-size:12px;font-weight:700;color:var(--gold);letter-spacing:.14em;text-transform:uppercase">Beard Laws Network</span>
-        </div>
-        <h1 style="font-size:clamp(72px,12vw,140px);line-height:.85;margin-bottom:8px;text-shadow:0 4px 40px rgba(0,0,0,.8)">BEARD<br><span class="gold-text">WALKS IN.</span></h1>
-        <p style="font-size:13px;font-weight:700;color:var(--blk-muted);letter-spacing:.16em;text-transform:uppercase;margin-bottom:28px">Small Towns. Big Discoveries. Supporting Local Businesses.</p>
-        <p style="font-size:17px;color:var(--blk-light);line-height:1.75;max-width:480px;margin-bottom:40px">Local restaurants, bars, breweries, barbershops, and hidden gems — discovered on video, reviewed honest. No PR. No sponsors. Just Beard.</p>
-        <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center">
-          <button class="btn btn-primary btn-lg" onclick="go('stops')" style="font-size:15px;padding:15px 32px">Browse All Stops →</button>
-          <button class="btn btn-secondary btn-lg" onclick="go('map')" style="font-size:15px;padding:15px 28px">🗺️ View the Map</button>
-        </div>
-        <!-- Stats strip -->
-        <div style="display:flex;gap:32px;margin-top:48px;padding-top:32px;border-top:1px solid var(--blk-line)">
-          <div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gold);line-height:1" id="hero-stop-count">—</div>
-            <div style="font-size:12px;color:var(--blk-muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-top:2px">Stops Reviewed</div>
-          </div>
-          <div style="width:1px;background:var(--blk-line)"></div>
-          <div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gold);line-height:1" id="hero-town-count">—</div>
-            <div style="font-size:12px;color:var(--blk-muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-top:2px">Towns Visited</div>
-          </div>
-          <div style="width:1px;background:var(--blk-line)"></div>
-          <div>
-            <div style="font-family:'Bebas Neue',sans-serif;font-size:36px;color:var(--gold);line-height:1" id="hero-bwh-count">—</div>
-            <div style="font-size:12px;color:var(--blk-muted);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-top:2px">Beard Was Here</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Right: Sticker -->
-      <div style="flex-shrink:0;display:flex;align-items:center;justify-content:center" class="hero-sticker-wrap">
-        <div style="position:relative">
-          <!-- Glow behind sticker -->
-          <div style="position:absolute;inset:-20px;background:radial-gradient(circle,rgba(253,184,39,.18) 0%,transparent 70%);border-radius:50%;z-index:0"></div>
-          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Camponotus_flavomarginatus_ant.jpg/320px-Camponotus_flavomarginatus_ant.jpg"
-               id="hero-sticker"
-               alt="Beard Walks In — Beard Was Here"
-               style="width:clamp(200px,22vw,320px);height:clamp(200px,22vw,320px);object-fit:contain;position:relative;z-index:1;filter:drop-shadow(0 8px 40px rgba(253,184,39,.3)) drop-shadow(0 2px 8px rgba(0,0,0,.8));animation:float 4s ease-in-out infinite"
-               onerror="this.style.display='none'" />
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div style="position:absolute;right:0;top:10%;bottom:10%;width:3px;opacity:.18" class="gold-bar-v"></div>
+    <div class="container" style="position:relative;padding-top:40px;padding-bottom:60px">
+      <div style="max-width:680px">
+        <div class="badge badge-gold" style="margin-bottom:22px;font-size:12px">🎬 New Stops Drop Weekly</div>
+        <h1 style="font-size:clamp(64px,11vw,130px);line-height:.88;margin-bottom:26px">Beard<br><span class="gold-text">Walks In.</span></h1>
+        <p style="font-size:17px;color:var(--blk-light);line-height:1.75;max-width:460px;margin-bottom:38px">Local restaurants, bars, breweries, barbershops, and hidden gems — discovered on video, reviewed honest. No sponsorships. Just Beard.</p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
+          <button class="btn btn-primary btn-lg" onclick="go('stops')">Browse All Stops →</button>
+          <button class="btn btn-secondary btn-lg" onclick="go('map')">View the Map</button>
         </div>
       </div>
     </div>
-
-    <!-- Bottom fade -->
-    <div style="position:absolute;bottom:0;left:0;right:0;height:80px;background:linear-gradient(transparent,var(--blk-deep));z-index:2"></div>
   </section>
-
-  <style>
-    @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-    @media(max-width:768px) { .hero-sticker-wrap { display:none !important; } }
-  </style>
 
   <div style="padding:28px 0;border-bottom:1px solid var(--blk-line);background:var(--blk-card)">
     <div class="container">
@@ -387,7 +322,7 @@ textarea.input{min-height:110px;resize:vertical}
         <option value="">All States</option>
       </select>
       <label style="display:flex;align-items:center;gap:7px;color:var(--blk-light);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap">
-        <input type="checkbox" id="s-approved" onchange="renderStops()" style="accent-color:var(--gold);width:15px;height:15px" />Beard Was Here
+        <input type="checkbox" id="s-approved" onchange="renderStops()" style="accent-color:var(--gold);width:15px;height:15px" />Beard Approved
       </label>
     </div>
     <div class="stop-grid" id="stops-grid"></div>
@@ -479,15 +414,15 @@ textarea.input{min-height:110px;resize:vertical}
     <div style="display:flex;flex-direction:column;gap:28px;color:var(--blk-pale);font-size:16px;line-height:1.85">
       <p>Beard Walks In is a video-first local discovery platform born out of the Beard Laws Network. The concept is simple: Beard walks into a local restaurant, bar, brewery, barbershop, or hidden gem — orders what looks good, talks to the people, and tells you exactly what he thinks.</p>
       <p>No PR packages. No sponsored meals. No algorithm-chasing. Just an honest look at the places that make local communities worth living in.</p>
-      <p>Every stop on this site has been visited in person and reviewed on video. If it's got the <strong style="color:var(--gold)">Beard Was Here</strong> badge, that means it's the real deal.</p>
+      <p>Every stop on this site has been visited in person and reviewed on video. If it's got the <strong style="color:var(--gold)">Beard Approved</strong> badge, that means it's the real deal.</p>
       <div class="card-flat" style="padding:28px;border-left:3px solid var(--gold);border-radius:0 14px 14px 0;background:var(--blk-surf)">
         <h3 style="font-size:24px;margin-bottom:8px">Part of the Beard Laws Network</h3>
         <p style="color:var(--blk-muted);font-size:15px">Find the full Beard Laws universe at <a href="https://youtube.com/@BeardLawsNetwork" target="_blank" style="color:var(--gold);text-decoration:none">YouTube @BeardLawsNetwork</a>.</p>
       </div>
       <div>
-        <h3 style="font-size:32px;margin-bottom:14px">The Beard Was Here Badge</h3>
+        <h3 style="font-size:32px;margin-bottom:14px">The Beard Approved Badge</h3>
         <p style="margin-bottom:18px">Good food or product, good vibe, good people — that's the standard.</p>
-        <div class="beard-stamp">★ BEARD WAS HERE</div>
+        <div class="beard-stamp">★ BEARD APPROVED</div>
       </div>
       <div>
         <h3 style="font-size:32px;margin-bottom:14px">Want Beard to Visit?</h3>
@@ -508,10 +443,10 @@ textarea.input{min-height:110px;resize:vertical}
       <div class="card-flat" style="padding:24px;display:flex;gap:20px;align-items:flex-start"><span style="font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--gold);line-height:1;min-width:48px">1</span><div><h3 style="font-size:22px;margin-bottom:6px">Someone Submits Your Place</h3><p style="color:var(--blk-muted);font-size:15px;line-height:1.6">A customer, employee, or you submit via the Suggest a Stop form. Beard reads every submission.</p></div></div>
       <div class="card-flat" style="padding:24px;display:flex;gap:20px;align-items:flex-start"><span style="font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--gold);line-height:1;min-width:48px">2</span><div><h3 style="font-size:22px;margin-bottom:6px">Beard Walks In</h3><p style="color:var(--blk-muted);font-size:15px;line-height:1.6">No heads up. No special treatment. Beard walks in like any other customer and films the honest experience.</p></div></div>
       <div class="card-flat" style="padding:24px;display:flex;gap:20px;align-items:flex-start"><span style="font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--gold);line-height:1;min-width:48px">3</span><div><h3 style="font-size:22px;margin-bottom:6px">Video + Listing Go Live</h3><p style="color:var(--blk-muted);font-size:15px;line-height:1.6">Video publishes to the Beard Laws Network. Your business gets a permanent listing with your video, photos, ratings, and map pin.</p></div></div>
-      <div class="card-flat" style="padding:24px;display:flex;gap:20px;align-items:flex-start"><span style="font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--gold);line-height:1;min-width:48px">4</span><div><h3 style="font-size:22px;margin-bottom:6px">Earn the Beard Was Here Stamp</h3><p style="color:var(--blk-muted);font-size:15px;line-height:1.6">If you earn it, Beard grants the official Beard Was Here badge. Hang it in the window. It means something.</p></div></div>
+      <div class="card-flat" style="padding:24px;display:flex;gap:20px;align-items:flex-start"><span style="font-family:'Bebas Neue',sans-serif;font-size:52px;color:var(--gold);line-height:1;min-width:48px">4</span><div><h3 style="font-size:22px;margin-bottom:6px">Earn the Badge</h3><p style="color:var(--blk-muted);font-size:15px;line-height:1.6">If you earn it, Beard grants the official Beard Approved badge. Hang it in the window. It means something.</p></div></div>
     </div>
     <div style="text-align:center;padding:44px;background:var(--blk-surf);border-radius:16px;border:1px solid var(--blk-line)">
-      <div class="beard-stamp" style="margin-bottom:22px">★ BEARD WAS HERE</div>
+      <div class="beard-stamp" style="margin-bottom:22px">★ BEARD APPROVED</div>
       <h3 style="font-size:36px;margin-bottom:10px">Ready to get on the map?</h3>
       <p style="color:var(--blk-muted);margin-bottom:24px">Submit your business and let the community do the rest.</p>
       <button class="btn btn-primary btn-lg" onclick="go('suggest')">Suggest a Stop →</button>
@@ -612,7 +547,7 @@ textarea.input{min-height:110px;resize:vertical}
               <div style="grid-column:1/-1"><label class="label">Family Friendly Note</label><input class="input" id="sf-fam" placeholder="e.g. Great for families, kids menu available" /></div>
               <div><label class="label">Would I Go Back?</label><select class="input" id="sf-wgb"><option value="">Select…</option><option value="hell_yes">Hell Yes</option><option value="yes">Yeah, I Would</option><option value="not_my_scene">Not My Scene</option></select></div>
               <div style="display:flex;align-items:center;gap:22px;padding-top:8px">
-                <label style="display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--blk-pale);font-size:14px;font-weight:600"><input type="checkbox" id="sf-approved" style="accent-color:var(--gold);width:16px;height:16px" /> Beard Was Here</label>
+                <label style="display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--blk-pale);font-size:14px;font-weight:600"><input type="checkbox" id="sf-approved" style="accent-color:var(--gold);width:16px;height:16px" /> Beard Approved</label>
                 <label style="display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--blk-pale);font-size:14px;font-weight:600"><input type="checkbox" id="sf-pub" style="accent-color:var(--gold);width:16px;height:16px" /> Published</label>
                 <label style="display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--blk-pale);font-size:14px;font-weight:600"><input type="checkbox" id="sf-feat" style="accent-color:var(--gold);width:16px;height:16px" /> Featured</label>
               </div>
@@ -666,7 +601,7 @@ textarea.input{min-height:110px;resize:vertical}
     </div>
     <div class="divider" style="padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px">
       <p style="color:var(--blk-mid);font-size:12px">© 2025 Beard Walks In · Part of the Beard Laws Network</p>
-      <p style="color:var(--blk-mid);font-size:12px">Small Towns. Big Discoveries. Beard Was Here.</p>
+      <p style="color:var(--blk-mid);font-size:12px">Built local. Reviewed honest. Beard approved.</p>
     </div>
   </div>
 </footer>
@@ -676,8 +611,8 @@ textarea.input{min-height:110px;resize:vertical}
 'use strict';
 
 // ── CONFIG — replace these ─────────────────────────────
-var SUPABASE_URL  = 'YOUR_SUPABASE_URL';
-var SUPABASE_ANON = 'YOUR_SUPABASE_ANON_KEY';
+var SUPABASE_URL  = 'https://scqezmnmdwtngvvunfsb.supabase.co';
+var SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNjcWV6bW5tZHd0bmd2dnVuZnNiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMDI3MjAsImV4cCI6MjA5Mjg3ODcyMH0.Ff4P2U7O11iHZTMArgWBZT3sNaGpkN5UKAL7G7wSEzo';
 
 // ── ALL STATE UP FRONT (no hoisting issues) ────────────
 var sb          = null;
@@ -793,27 +728,6 @@ function renderHomeGrid() {
   var list = homeCat === 'all' ? allStops : allStops.filter(function(s){ return s.category === homeCat; });
   var show = list.slice(0,6);
   grid.innerHTML = show.length ? show.map(stopCard).join('') : '<p style="color:var(--blk-muted);grid-column:1/-1">No stops in this category yet.</p>';
-
-  // Update hero stats
-  var towns = [];
-  allStops.forEach(function(s){ if (towns.indexOf(s.town) === -1) towns.push(s.town); });
-  var bwh = allStops.filter(function(s){ return s.beard_approved; }).length;
-  var sc = document.getElementById('hero-stop-count');
-  var tc = document.getElementById('hero-town-count');
-  var bc = document.getElementById('hero-bwh-count');
-  if (sc) sc.textContent = allStops.length;
-  if (tc) tc.textContent = towns.length;
-  if (bc) bc.textContent = bwh || allStops.length;
-
-  // Load sticker image from uploaded file
-  var sticker = document.getElementById('hero-sticker');
-  if (sticker) {
-    sticker.src = 'https://raw.githubusercontent.com/beardlaws/beardwalksin/main/beard-was-here-sticker.png';
-    sticker.onerror = function() {
-      // fallback — hide if image not found
-      this.style.display = 'none';
-    };
-  }
 }
 
 // ── STOPS PAGE ────────────────────────────────────────
@@ -859,7 +773,7 @@ function stopCard(s) {
     '<div style="position:relative;overflow:hidden">' +
       '<img src="'+esc(thumb)+'" alt="'+esc(s.name)+'" class="stop-thumb" onerror="this.src=\''+placeholder(s)+'\'" loading="lazy" />' +
       '<div style="position:absolute;top:10px;left:10px"><span class="badge badge-dark">'+cat.icon+' '+cat.label+'</span></div>' +
-      (s.beard_approved ? '<div style="position:absolute;top:10px;right:10px"><span class="badge badge-gold">★ Beard Was Here</span></div>' : '') +
+      (s.beard_approved ? '<div style="position:absolute;top:10px;right:10px"><span class="badge badge-gold">★ Approved</span></div>' : '') +
     '</div>' +
     '<div style="padding:18px">' +
       '<h3 style="font-size:22px;margin-bottom:4px;line-height:1.1">'+esc(s.name)+'</h3>' +
@@ -895,7 +809,7 @@ function renderDetail(s) {
   h += '<div class="detail-grid"><div>';
   h += '<div style="display:flex;gap:10px;margin-bottom:12px;flex-wrap:wrap;align-items:center">';
   h += '<span class="badge badge-dark">'+cat.icon+' '+cat.label+'</span>';
-  if (s.beard_approved) h += '<div class="beard-stamp">★ BEARD WAS HERE</div>';
+  if (s.beard_approved) h += '<div class="beard-stamp">★ BEARD APPROVED</div>';
   h += '</div>';
   h += '<h1 style="font-size:clamp(36px,5vw,68px);line-height:.95;margin-bottom:8px">'+esc(s.name)+'</h1>';
   h += '<p style="color:var(--blk-muted);font-size:15px;margin-bottom:20px">📍 '+esc(s.town)+', '+esc(s.state)+(s.visit_date ? ' · Visited '+fmtDate(s.visit_date) : '')+'</p>';
@@ -942,28 +856,9 @@ function renderDetail(s) {
     h += '</div>';
   }
   h += '<button class="btn btn-secondary btn-full" onclick="go(\'stops\')">← Back to Stops</button>';
-
-  // Share button
-  h += '<div class="card-flat" style="padding:16px">';
-  h += '<div style="font-size:11px;font-weight:700;color:var(--blk-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Share This Stop</div>';
-  h += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
-  h += '<a href="https://twitter.com/intent/tweet?text='+encodeURIComponent('Just found '+s.name+' in '+s.town+', '+s.state+' on Beard Walks In! 🎬 Small towns. Big discoveries. #BeardWalksIn #BeardLaws')+
-       '&url='+encodeURIComponent('https://beardwalksin.com/#stop-'+esc(s.slug||s.id))+'" target="_blank" rel="noopener" '+
-       'style="background:#000;color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px">𝕏 Share</a>';
-  h += '<a href="https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent('https://beardwalksin.com')+'" target="_blank" rel="noopener" '+
-       'style="background:#1877F2;color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:6px">Facebook</a>';
-  h += '<button onclick="copyStopLink(\''+esc(s.slug||s.id)+'\')" '+
-       'style="background:var(--blk-surf);color:var(--blk-pale);padding:8px 14px;border-radius:8px;font-size:13px;font-weight:700;border:1px solid var(--blk-line);cursor:pointer">📋 Copy Link</button>';
-  h += '</div></div>';
-
   h += '</div></div></div>';
 
   document.getElementById('stop-detail').innerHTML = h;
-
-  // Update page title and meta for SEO
-  document.title = s.name + ' in ' + s.town + ', ' + s.state + ' — Beard Walks In';
-  var metaDesc = document.querySelector('meta[name="description"]');
-  if (metaDesc) metaDesc.setAttribute('content', 'Beard visited ' + s.name + ' in ' + s.town + ', ' + s.state + '. ' + (s.review ? s.review.slice(0,120)+'…' : 'Local discovery reviewed honest on video.'));
 
   if (s.latitude && s.longitude && s.address) {
     setTimeout(function() {
@@ -974,15 +869,6 @@ function renderDetail(s) {
       } catch(e){}
     }, 250);
   }
-}
-
-function copyStopLink(slugOrId) {
-  var url = 'https://beardwalksin.com/#stop';
-  navigator.clipboard.writeText(url).then(function() {
-    toast('Link copied!', 'ok');
-  }).catch(function() {
-    toast('Copy failed — try manually', 'err');
-  });
 }
 
 // ── MAP ───────────────────────────────────────────────
